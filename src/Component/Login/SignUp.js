@@ -56,76 +56,78 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container2">
-      <div className="title">Registration</div>
-      <div className="content">
-        <form onSubmit={handleSubmit}>
-          <div className="user-details">
-            <div className="input-box">
-              <span className="details">First Name</span>
+    <div className="body">
+      <div className="container2">
+        <div className="title">Registration</div>
+        <div className="content">
+          <form onSubmit={handleSubmit}>
+            <div className="user-details">
+              <div className="input-box">
+                <span className="details">First Name</span>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Enter your first name"
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <span className="details">Last Name</span>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Enter your last name"
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <span className="details">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <span className="details">Phone Number</span>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  placeholder="Enter your phone number"
+                  required
+                />
+              </div>
+              <div className="input-box">
+                <span className="details">Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+            </div>
+            {error && <div className="error-message">{error}</div>}
+            <div className="button">
               <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="Enter your first name"
-                required
+                type="submit"
+                value={loading ? "Registering..." : "Register"}
+                disabled={loading}
               />
             </div>
-            <div className="input-box">
-              <span className="details">Last Name</span>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Enter your last name"
-                required
-              />
-            </div>
-            <div className="input-box">
-              <span className="details">Email</span>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div className="input-box">
-              <span className="details">Phone Number</span>
-              <input
-                type="text"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="Enter your phone number"
-                required
-              />
-            </div>
-            <div className="input-box">
-              <span className="details">Password</span>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-          </div>
-          {error && <div className="error-message">{error}</div>}
-          <div className="button">
-            <input
-              type="submit"
-              value={loading ? "Registering..." : "Register"}
-              disabled={loading}
-            />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
