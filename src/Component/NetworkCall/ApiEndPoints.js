@@ -17,6 +17,8 @@ const ApiEndPoints = {
   getUserLumSumPortfolio: `${APPConfig.API_URL}/general/getUserLumSumPortfolio`,
   getAdminLumSumPortfolio: `${APPConfig.API_URL}/general/getAdminLumSumPortfolio`,
   uploadImage: `${APPConfig.API_URL}/general/uploadProfilePic`,
+  updateUserProfile: `${APPConfig.API_URL}/general/updateUserProfile`,
+  getUserProfile: `${APPConfig.API_URL}/general/getUserProfile`,
 };
 
 export default ApiEndPoints;

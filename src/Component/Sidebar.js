@@ -17,6 +17,7 @@ import {
   Visibility,
   VisibilityOff,
   AccountBalance,
+  AccountCircle,
 } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -24,6 +25,7 @@ import { Button, Form, Modal, ModalBody, ModalHeader } from "react-bootstrap";
 import { getToken, getUserdata, LogOut } from "./Helper/Storage";
 import axios from "axios";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
+import toast from "react-hot-toast";
 
 const Sidebar = ({ mobileOpen, onClose }) => {
   const [showModal, setShowModal] = React.useState(false);
@@ -86,6 +88,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
   const Logouts = () => {
     LogOut();
     navigate("/");
+    toast.success("Logout successfully!");
     window.location.reload();
   };
   // const drawerContent = (
@@ -152,6 +155,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
           <ListItemButton component={Link} to="/">
             <ListItemIcon sx={{ color: "white" }}>
               <Home />
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to="/profile">
+            <ListItemIcon sx={{ color: "white" }}>
+              <AccountCircle />
             </ListItemIcon>
           </ListItemButton>
         </ListItem>
