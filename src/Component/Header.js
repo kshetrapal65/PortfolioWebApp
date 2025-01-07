@@ -22,6 +22,7 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 const Header = ({ onMenuClick }) => {
+  const [profileData, setProfileData] = useState();
   const token = getToken();
   const [img, setImg] = useState(null);
   const [show, setShow] = useState(false);
@@ -30,6 +31,7 @@ const Header = ({ onMenuClick }) => {
   };
   useEffect(() => {
     getImg();
+    getUserProfile();
   }, []);
   const uploadImg = async (e) => {
     e.preventDefault();
@@ -71,15 +73,33 @@ const Header = ({ onMenuClick }) => {
       console.error("Error fetching the image:", error);
     }
   };
+  const getUserProfile = async () => {
+    try {
+      // setLoading(true);
+      const response = await axios.get(ApiEndPoints.getUserProfile, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        setProfileData(response?.data?.data);
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.log("error", error);
+      // setLoading(false);
+    }
+  };
 
   return (
     <AppBar
       position="sticky"
-      sx={{ backgroundColor: "#202028", padding: "10px" }}
+      sx={{ backgroundColor: "#FFFDD0", padding: "10px" }}
     >
       <Toolbar>
         <Box sx={{ display: { xs: "block", sm: "none" }, mr: 2 }}>
-          <IconButton color="inherit" onClick={onMenuClick}>
+          <IconButton color="black" onClick={onMenuClick}>
             <Menu />
           </IconButton>
         </Box>
@@ -130,7 +150,12 @@ const Header = ({ onMenuClick }) => {
               <Notifications sx={{ color: "white" }} />
             </Badge>
           </IconButton> */}
+
           <IconButton>
+            <span className="small me-2" style={{ color: "black" }}>
+              {profileData?.userProfile?.firstName}{" "}
+              {profileData?.userProfile?.lastName}
+            </span>
             <Avatar onClick={handleModal} src={img} alt="Profile" />
           </IconButton>
         </Box>

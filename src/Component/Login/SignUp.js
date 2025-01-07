@@ -117,6 +117,21 @@ const SignUp = () => {
                   required
                 />
               </div>
+              <div className="mb-3 input-box">
+                <label className="form-label">Gender</label>
+                <select
+                  className="form-select"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </div>
             {error && <div className="error-message">{error}</div>}
             <div className="button">
