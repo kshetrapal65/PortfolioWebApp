@@ -10,7 +10,7 @@ import {
   Card,
 } from "react-bootstrap";
 import axios from "axios";
-import { getToken } from "./Helper/Storage";
+import { getToken, getUserdata } from "./Helper/Storage";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 import { use } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 
 const UserProfile = () => {
   const token = getToken();
+  const user = getUserdata();
   const [profileData, setProfileData] = useState({
     address: {
       addressLineOne: "",
@@ -32,6 +33,10 @@ const UserProfile = () => {
       panCard: "",
       aadharCard: "",
       maritalStatus: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      gender: "",
     },
   });
 
@@ -45,16 +50,6 @@ const UserProfile = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const [section, field] = name.split(".");
-    console.log(
-      "section",
-      section,
-      "field",
-      field,
-      "value",
-      value,
-      "name",
-      name
-    );
 
     setProfileData((prev) => ({
       ...prev,
@@ -124,16 +119,76 @@ const UserProfile = () => {
           />
         </div>
       )}
-      <Row>
+      <Row className="text-black">
         <Col md={12} className="mx-auto">
-          <h3 className="text-start mb-4">Update User Profile</h3>
+          <h3 className="text-start mb-4">
+            {user?.userType == "Admin"
+              ? "Update Admin Profile"
+              : "Update User Profile"}
+          </h3>
           <Form onSubmit={handleSubmit}>
             {/* Address Section */}
-            <Card className="bg-dark mb-2 shadow text-white">
+            <Card className="bg-light mb-2 shadow  ">
               <Card.Body>
                 <Row>
                   <Col className="text-start" md={12}>
                     <h5 className="mt-4 mb-3">User Information</h5>
+                  </Col>
+
+                  <Col className="text-start" lg={4} md={6} sm={12} xs={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="userProfile.firstName"
+                        value={profileData?.userProfile?.firstName}
+                        onChange={handleInputChange}
+                        placeholder="Enter First Name"
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="text-start" lg={4} md={6} sm={12} xs={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="userProfile.lastName"
+                        value={profileData?.userProfile?.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Enter Last Name"
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="text-start" lg={4} md={6} sm={12} xs={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="userProfile.phoneNumber"
+                        value={profileData?.userProfile?.phoneNumber}
+                        onChange={handleInputChange}
+                        placeholder="Enter Phone Number"
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="text-start" lg={4} md={6} sm={12} xs={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Gender</Form.Label>
+                      <Form.Select
+                        name="userProfile.gender"
+                        value={profileData?.userProfile?.gender}
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </Form.Select>
+                    </Form.Group>
                   </Col>
                   <Col className="text-start" lg={4} md={6} sm={12} xs={12}>
                     <Form.Group className="mb-3">
@@ -180,7 +235,7 @@ const UserProfile = () => {
                 </Row>
               </Card.Body>
             </Card>
-            <Card className="bg-dark shadow text-white">
+            <Card className=" bg-light  shadow  ">
               <Card.Body>
                 <Row>
                   <Col md={12} className="text-start">

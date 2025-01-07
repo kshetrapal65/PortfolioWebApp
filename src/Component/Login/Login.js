@@ -16,6 +16,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
 import styles from "../Helper/LoaderCss";
 import PulseLoader from "react-spinners/PulseLoader";
+import img from "../../Assets/Images/login.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -79,7 +80,7 @@ const Login = () => {
         <div style={styles.divStyle}>
           <PulseLoader
             loading={loading}
-            color="#32bd8f"
+            color="#093d62"
             style={styles.backdrop}
           />
         </div>
@@ -91,7 +92,9 @@ const Login = () => {
           className="d-none d-md-flex justify-content-center align-items-center"
         >
           <img
-            src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/bg.svg"
+            src={img}
+            width="60%"
+            height={"60%"}
             alt="Background"
             className="img-fluid"
           />
@@ -115,12 +118,14 @@ const Login = () => {
             </div>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email" className="mb-3">
-                <Form.Label className="text-start w-100">Email</Form.Label>{" "}
+                <Form.Label className="text-start w-100">
+                  Email or Phone
+                </Form.Label>{" "}
                 {/* Aligns label to start */}
                 <Form.Control
                   type="email"
                   name="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter your email or phone"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -175,7 +180,7 @@ const Login = () => {
                   </div>
                   <Button
                     type="submit"
-                    style={{ backgroundColor: "#32bd8f", border: "none" }}
+                    style={{ backgroundColor: "#093d62", border: "none" }}
                     className="w-100 mt-3"
                   >
                     Login

@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import {
   Home,
@@ -48,7 +49,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       if (response.status === 200) {
         setBankDetail(response.data.data);
         setPrimarryAccount(
-          response.data.data?.find((item) => item.primaryFlag === true)
+          response.data.data?.find((item) => item.primaryFlag == true)
         );
       }
     } catch (error) {
@@ -65,6 +66,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
   const handleModalClose = () => setShowModal(false);
   const handleModalopen = () => {
     console.log("clicked");
+    getBankDetails();
 
     setShowModal(true);
   };
@@ -141,7 +143,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
   const drawerContent = (
     <Box
       sx={{
-        backgroundColor: "#1f1f2e",
+        backgroundColor: "#FFFDD0",
         height: "100%",
         color: "white",
         display: "flex", // Enable flexbox for the Box
@@ -152,34 +154,42 @@ const Sidebar = ({ mobileOpen, onClose }) => {
     >
       <List>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/">
-            <ListItemIcon sx={{ color: "white" }}>
-              <Home />
-            </ListItemIcon>
-          </ListItemButton>
+          <Tooltip title="Home">
+            <ListItemButton component={Link} to="/">
+              <ListItemIcon sx={{ color: "black" }}>
+                <Home />
+              </ListItemIcon>
+            </ListItemButton>
+          </Tooltip>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/profile">
-            <ListItemIcon sx={{ color: "white" }}>
-              <AccountCircle />
-            </ListItemIcon>
-          </ListItemButton>
+          <Tooltip title="Profile">
+            <ListItemButton component={Link} to="/profile">
+              <ListItemIcon sx={{ color: "black" }}>
+                <AccountCircle />
+              </ListItemIcon>
+            </ListItemButton>
+          </Tooltip>
         </ListItem>
         {user?.userType === "User" && (
           <>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to="/bank-accounts">
-                <ListItemIcon sx={{ color: "white" }}>
-                  <AccountBalance />
-                </ListItemIcon>
-              </ListItemButton>
+              <Tooltip title="Accounts List">
+                <ListItemButton component={Link} to="/bank-accounts">
+                  <ListItemIcon sx={{ color: "black" }}>
+                    <AccountBalance />
+                  </ListItemIcon>
+                </ListItemButton>
+              </Tooltip>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{ color: "white" }}>
-                  <Visibility onClick={() => handleModalopen()} />
-                </ListItemIcon>
-              </ListItemButton>
+              <Tooltip title="View Bank Detail">
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: "black" }}>
+                    <Visibility onClick={() => handleModalopen()} />
+                  </ListItemIcon>
+                </ListItemButton>
+              </Tooltip>
             </ListItem>
           </>
         )}
@@ -187,11 +197,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       <Box sx={{ flexGrow: 1 }} />{" "}
       {/* Pushes the logout button to the bottom */}
       <ListItem disablePadding>
-        <ListItemButton onClick={() => Logouts()}>
-          <ListItemIcon sx={{ color: "white" }}>
-            <Logout />
-          </ListItemIcon>
-        </ListItemButton>
+        <Tooltip title="Logout">
+          <ListItemButton onClick={() => Logouts()}>
+            <ListItemIcon sx={{ color: "black" }}>
+              <Logout />
+            </ListItemIcon>
+          </ListItemButton>
+        </Tooltip>
       </ListItem>
     </Box>
   );

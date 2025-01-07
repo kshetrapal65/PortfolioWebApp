@@ -414,9 +414,7 @@ const Dashboards = () => {
   };
 
   return (
-    <Box
-      sx={{ display: "flex", minHeight: "100vh", backgroundColor: "#121212" }}
-    >
+    <Box sx={{ backgroundColor: "#FFFDD0", minHeight: "100vh" }}>
       {/* Sidebar */}
       <Sidebar mobileOpen={mobileOpen} onClose={handleDrawerToggle} />
 
@@ -475,8 +473,8 @@ const Dashboards = () => {
                 width="250px"
               />
             </Col>
-          </Row>
-          <Row className="mt-2">
+          </Row> */}
+          {/* <Row className="mt-2">
             <Col className="mt-2" xs={12} sm={12} lg={12} md={12}>
               <Table responsive hover variant="dark" className="rounded">
                 <thead>

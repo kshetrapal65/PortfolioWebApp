@@ -5,8 +5,17 @@ import Dashboards from "../Component/Dashboards";
 import { useEffect, useState } from "react";
 
 import { Button, Card, Col, Form, Modal, Row, Table } from "react-bootstrap";
-import { FaDollarSign, FaFileAlt, FaShoppingCart } from "react-icons/fa";
-import { BsCartPlus } from "react-icons/bs";
+import {
+  FaChartLine,
+  FaCoins,
+  FaDollarSign,
+  FaFileAlt,
+  FaMoneyBillWave,
+  FaPiggyBank,
+  FaRupeeSign,
+  FaShoppingCart,
+} from "react-icons/fa";
+import { BsCartPlus, BsCurrencyExchange, BsGraphUp } from "react-icons/bs";
 import { FaEdit, FaPlus } from "react-icons/fa";
 
 import axios from "axios";
@@ -18,6 +27,7 @@ import UserProfile from "../Component/UserProfile";
 import toast from "react-hot-toast";
 import PulseLoader from "react-spinners/PulseLoader";
 import styles from "../Component/Helper/LoaderCss";
+import { AiOutlineBank } from "react-icons/ai";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
@@ -53,12 +63,12 @@ const PrivateRoute = () => {
     getAllProtFolio();
     getlumsum();
   }, []);
-  const DashboardCard = ({ title, value, icon, color }) => {
+  const DashboardCard = ({ title, value, icon, color, backgroundColor }) => {
     return (
       <Card
         style={{
-          backgroundColor: "#1c1c28",
-          color: "#fff",
+          backgroundColor: backgroundColor,
+          // color: "#fff",
           borderRadius: "10px",
           padding: "15px",
           // maxWidth: width,
@@ -215,9 +225,7 @@ const PrivateRoute = () => {
   return (
     <>
       <Routes>
-        {/* Dashboard Layout with constant Sidebar and Header */}
         <Route path="/" element={<Dashboards />}>
-          {/* Nested Routes */}
           <Route
             index
             element={
@@ -225,58 +233,71 @@ const PrivateRoute = () => {
                 {user?.userType === "Admin" ? (
                   <>
                     <div>
-                      <Row className="g-3">
-                        <Col xs={12} sm={6} lg={3} md={3}>
-                          <DashboardCard
-                            title="Total Capital"
-                            value={lumsum?.totalCapital}
-                            icon={<BsCartPlus style={{ color: "#4160f9" }} />}
-                            color="#293368"
-                            percentage={-3}
-                            trend="down"
-                            width="250px"
-                          />
-                        </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                      <Row className="g-3 mt-1">
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
                             title="Total investment"
                             value={lumsum?.totalInvestment}
-                            icon={
-                              <FaShoppingCart style={{ color: "#00c98d" }} />
-                            }
+                            icon={<FaCoins style={{ color: "#00c98d" }} />}
                             color="#155345"
                             percentage={-3}
                             trend="down"
                             width="250px"
+                            backgroundColor="#FFDAB9"
                           />
                         </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
-                            title="Total Payable"
+                            title="Total Recieved"
                             value={lumsum?.payable}
-                            icon={<FaFileAlt style={{ color: "#f35f5f" }} />}
+                            icon={
+                              <FaMoneyBillWave style={{ color: "#f35f5f" }} />
+                            }
                             color="#5f3237"
                             percentage={3}
                             trend="up"
                             width="250px"
+                            backgroundColor="#D5E8D4"
                           />
                         </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
                             title="Total Total Tds"
                             value={lumsum?.totalTds}
-                            icon={<FaDollarSign style={{ color: "#ea42a2" }} />}
+                            icon={<FaRupeeSign style={{ color: "#ea42a2" }} />}
                             color="#5b2a4a"
                             percentage={-3}
                             trend="down"
                             width="250px"
+                            backgroundColor="#E6E6FA"
+                          />
+                        </Col>
+                        <Col xs={6} sm={6} lg={3} md={3}>
+                          <DashboardCard
+                            title="Total Capital"
+                            value={lumsum?.totalCapital}
+                            icon={
+                              <AiOutlineBank style={{ color: "#4160f9" }} />
+                            }
+                            color="#293368"
+                            percentage={-3}
+                            trend="down"
+                            width="250px"
+                            backgroundColor="#F5C6AA"
                           />
                         </Col>
                       </Row>
                       <Row className="mt-2">
                         <Col className="mt-2" xs={12} sm={12} lg={12} md={12}>
-                          <div>
-                            <Table hover variant="dark" className="rounded">
+                          <div className="table-responsive">
+                            <Table
+                              striped
+                              bordered
+                              responsive
+                              hover
+                              variant="light"
+                              className="rounded"
+                            >
                               <thead>
                                 <tr>
                                   <th>#</th>
@@ -343,7 +364,6 @@ const PrivateRoute = () => {
                                   value={formData?.portfolioId}
                                   readOnly
                                   disabled
-                                  //  onChange={handleformChange}
                                   required
                                 />
                               </Form.Group>
@@ -404,11 +424,6 @@ const PrivateRoute = () => {
                             >
                               {flag ? "Update" : "Add"}
                             </Button>
-                            {/* {product.id && (
-              <Button variant="secondary" onClick={resetForm}>
-                Cancel
-              </Button>
-            )} */}
                           </Form>
                         </Modal.Body>
                       </Modal>
@@ -417,58 +432,64 @@ const PrivateRoute = () => {
                 ) : (
                   <>
                     <div>
-                      <Row className="g-3">
-                        <Col xs={12} sm={6} lg={3} md={3}>
-                          <DashboardCard
-                            title="Total Capital"
-                            value={lumsum?.totalCapital}
-                            icon={<BsCartPlus style={{ color: "#4160f9" }} />}
-                            color="#293368"
-                            percentage={-3}
-                            trend="down"
-                            width="250px"
-                          />
-                        </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                      <Row className="g-3 mt-1">
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
                             title="Total investment"
                             value={lumsum?.totalInvestment}
-                            icon={
-                              <FaShoppingCart style={{ color: "#00c98d" }} />
-                            }
+                            icon={<FaCoins style={{ color: "#00c98d" }} />}
                             color="#155345"
                             percentage={-3}
                             trend="down"
                             width="250px"
+                            backgroundColor="#FFDAB9"
                           />
                         </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
-                            title="Total Payable"
+                            title="Total Recieved"
                             value={lumsum?.payable}
-                            icon={<FaFileAlt style={{ color: "#f35f5f" }} />}
+                            icon={
+                              <FaMoneyBillWave style={{ color: "#f35f5f" }} />
+                            }
                             color="#5f3237"
                             percentage={3}
                             trend="up"
                             width="250px"
+                            backgroundColor="#D5E8D4"
                           />
                         </Col>
-                        <Col xs={12} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={3} md={3}>
                           <DashboardCard
-                            title="Total Tds"
+                            title="Total Total Tds"
                             value={lumsum?.totalTds}
-                            icon={<FaDollarSign style={{ color: "#ea42a2" }} />}
+                            icon={<FaRupeeSign style={{ color: "#ea42a2" }} />}
                             color="#5b2a4a"
                             percentage={-3}
                             trend="down"
                             width="250px"
+                            backgroundColor="#E6E6FA"
+                          />
+                        </Col>
+                        <Col xs={6} sm={6} lg={3} md={3}>
+                          <DashboardCard
+                            title="Total Capital"
+                            value={lumsum?.totalCapital}
+                            icon={
+                              <AiOutlineBank style={{ color: "#4160f9" }} />
+                            }
+                            color="#293368"
+                            percentage={-3}
+                            trend="down"
+                            width="250px"
+                            backgroundColor="#F5C6AA"
                           />
                         </Col>
                       </Row>
                       <Row className="mt-2">
                         <Col className="mt-2" xs={12} sm={12} lg={12} md={12}>
                           <div className="table-responsive">
-                            <Table hover variant="dark" className="rounded">
+                            <Table hover variant="light" className="rounded">
                               <thead>
                                 <tr>
                                   <th>Plan Type</th>
@@ -476,8 +497,8 @@ const PrivateRoute = () => {
                                   <th>Invested Amount</th>
                                   <th>Monthly ROI</th>
                                   <th>Bonus on ROI</th>
-                                  <th>Total Monthly Return</th>
-                                  <th>Monthly Payable</th>
+                                  <th>Total Monthly income</th>
+
                                   <th>Yearly Return</th>
                                   <th>Yearly TDS</th>
                                   <th>Monthly TDS</th>
@@ -496,7 +517,7 @@ const PrivateRoute = () => {
                                     <td>{item.monthlyReturnOnInvestment}</td>
                                     <td>{item.bonusOnMonthlyReturn}</td>
                                     <td>{item.totalMonthlyReturn}</td>
-                                    <td>{item.monthlyPayable ?? "N/A"}</td>
+
                                     <td>{item.yearlyReturn}</td>
                                     <td>{item.yearlyTds}</td>
                                     <td>{item.monthlyTds ?? "N/A"}</td>

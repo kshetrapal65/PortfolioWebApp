@@ -19,6 +19,7 @@ const ApiEndPoints = {
   uploadImage: `${APPConfig.API_URL}/general/uploadProfilePic`,
   updateUserProfile: `${APPConfig.API_URL}/general/updateUserProfile`,
   getUserProfile: `${APPConfig.API_URL}/general/getUserProfile`,
+  UpdatePrimaryBank: `${APPConfig.API_URL}/general/updatePrimaryBank`,
 };
 
 export default ApiEndPoints;
