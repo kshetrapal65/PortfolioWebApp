@@ -49,11 +49,17 @@
   background: #ccc;
 }
 .dashboard-content {
-  margin-left: 60px !important;
+  margin-left: 240px !important;
 }
 @media (max-width: 599px) {
   .dashboard-content {
     margin-left: 0px !important;
     padding: 0px !important;
+  }
+  .MuiBox-root {
+    /* margin: 0; */
+    padding: 2px !important;
+    /* box-sizing: border-box; */
+    /* font-family: "Poppins", sans-serif; */
   }
 }

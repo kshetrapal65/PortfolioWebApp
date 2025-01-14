@@ -1,20 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  TextField,
-  IconButton,
-  Avatar,
-  Badge,
-} from "@mui/material";
-import {
-  Notifications,
-  Search,
-  Menu,
-  Settings,
-  Mail,
-} from "@mui/icons-material";
+import { AppBar, Toolbar, Box, IconButton, Avatar } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 import { getToken } from "./Helper/Storage";
 import axios from "axios";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
@@ -95,7 +81,11 @@ const Header = ({ onMenuClick }) => {
   return (
     <AppBar
       position="sticky"
-      sx={{ backgroundColor: "#FFFDD0", padding: "10px" }}
+      sx={{
+        backgroundColor: "#fcf0eb",
+        padding: "10px",
+        display: { xs: "block", sm: "none" },
+      }}
     >
       <Toolbar>
         <Box sx={{ display: { xs: "block", sm: "none" }, mr: 2 }}>

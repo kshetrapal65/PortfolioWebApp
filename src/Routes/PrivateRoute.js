@@ -4,7 +4,16 @@ import Dashboards from "../Component/Dashboards";
 
 import { useEffect, useState } from "react";
 
-import { Button, Card, Col, Form, Modal, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Image,
+  Modal,
+  Row,
+  Table,
+} from "react-bootstrap";
 import {
   FaChartLine,
   FaCoins,
@@ -28,9 +37,17 @@ import toast from "react-hot-toast";
 import PulseLoader from "react-spinners/PulseLoader";
 import styles from "../Component/Helper/LoaderCss";
 import { AiOutlineBank } from "react-icons/ai";
+import investmentIcon from "../Assets/Images/01.png";
+import AmountRecievedIcon from "../Assets/Images/02.png";
+import TdsIcon from "../Assets/Images/03.png";
+import CapitalIcon from "../Assets/Images/04.png";
+import PortfolioIcon from "../Assets/Images/05.png";
+import PlanCards from "../Component/PlanCards";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
+  console.log("protfolio", protfolio);
+
   const [allProtfolio, setAllProtfolio] = useState([]);
   const [show, setShow] = useState(false);
   const [flag, setFlag] = useState(false);
@@ -67,7 +84,7 @@ const PrivateRoute = () => {
     return (
       <Card
         style={{
-          backgroundColor: backgroundColor,
+          background: "linear-gradient(90deg, #fcf0eb 50%, #fde8e1 100%)",
           // color: "#fff",
           borderRadius: "10px",
           padding: "15px",
@@ -75,9 +92,9 @@ const PrivateRoute = () => {
         }}
         className="shadow-sm"
       >
-        <Row className="align-items-center mb-2">
-          <Col xs={12}>
-            <div
+        <Row className="align-items-center g-1 justify-content-center mb-2">
+          <Col className="justify-content-center d-flex" xs={12}>
+            {/* <div
               style={{
                 backgroundColor: color,
                 borderRadius: "50%",
@@ -89,27 +106,23 @@ const PrivateRoute = () => {
                 height: "50px",
               }}
             >
-              {icon}
-            </div>
+              <Image style={{ width: "30px" }} src={investmentIcon} />
+            </div> */}
+            <Image style={{ width: "50px" }} src={icon} />
           </Col>
-          <Col className="text-start " xs={12}>
-            <h6 className="mb-0 small mt-2">{title}</h6>
+          <Col className="justify-content-center d-flex" xs={12}>
+            <span style={{ fontSize: "13px" }} className="mb-0   fw-bold mt-2">
+              {title}
+            </span>
           </Col>
-        </Row>
-        <Row>
-          <Col className="text-start ">
-            <h4 className="mb-0 fw-bold">{value}</h4>
+          <Col xs={12} className="justify-content-center d-flex">
+            <input
+              style={{ textAlign: "center" }}
+              type="text"
+              value={value}
+              className="form-control rounded-5 "
+            />
           </Col>
-          {/* <Col className="text-end">
-            <div style={{ color: "green", fontSize: "14px" }}>
-              {trend === "up" ? (
-                <FaArrowUp style={{ color: "green", marginRight: "5px" }} />
-              ) : (
-                <FaArrowDown style={{ color: "red", marginRight: "5px" }} />
-              )}
-              {percentage}%
-            </div>
-          </Col> */}
         </Row>
       </Card>
     );
@@ -233,12 +246,12 @@ const PrivateRoute = () => {
                 {user?.userType === "Admin" ? (
                   <>
                     <div>
-                      <Row className="g-3 mt-1">
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                      <Row className="g-3 justify-content-between ">
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total investment"
+                            title="investment"
                             value={lumsum?.totalInvestment}
-                            icon={<FaCoins style={{ color: "#00c98d" }} />}
+                            icon={investmentIcon}
                             color="#155345"
                             percentage={-3}
                             trend="down"
@@ -246,13 +259,11 @@ const PrivateRoute = () => {
                             backgroundColor="#FFDAB9"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total Recieved"
+                            title="Amount Recieved"
                             value={lumsum?.payable}
-                            icon={
-                              <FaMoneyBillWave style={{ color: "#f35f5f" }} />
-                            }
+                            icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
                             trend="up"
@@ -260,11 +271,11 @@ const PrivateRoute = () => {
                             backgroundColor="#D5E8D4"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total Total Tds"
+                            title="TDS Amount"
                             value={lumsum?.totalTds}
-                            icon={<FaRupeeSign style={{ color: "#ea42a2" }} />}
+                            icon={TdsIcon}
                             color="#5b2a4a"
                             percentage={-3}
                             trend="down"
@@ -272,13 +283,23 @@ const PrivateRoute = () => {
                             backgroundColor="#E6E6FA"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Capital"
                             value={lumsum?.totalCapital}
-                            icon={
-                              <AiOutlineBank style={{ color: "#4160f9" }} />
-                            }
+                            icon={CapitalIcon}
+                            color="#293368"
+                            percentage={-3}
+                            trend="down"
+                            width="250px"
+                            backgroundColor="#F5C6AA"
+                          />
+                        </Col>
+                        <Col xs={6} sm={6} lg={2} md={3}>
+                          <DashboardCard
+                            title="Total Portfolio"
+                            value={lumsum?.totalCapital}
+                            icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}
                             trend="down"
@@ -404,7 +425,7 @@ const PrivateRoute = () => {
                               </Form.Select>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formSelect">
-                              <Form.Label>Select yesr</Form.Label>
+                              <Form.Label>Select year</Form.Label>
                               <Form.Select
                                 name="year"
                                 aria-label="Default select example"
@@ -432,12 +453,12 @@ const PrivateRoute = () => {
                 ) : (
                   <>
                     <div>
-                      <Row className="g-3 mt-1">
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                      <Row className="g-3 justify-content-between mt-1 ">
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total investment"
+                            title="investment"
                             value={lumsum?.totalInvestment}
-                            icon={<FaCoins style={{ color: "#00c98d" }} />}
+                            icon={investmentIcon}
                             color="#155345"
                             percentage={-3}
                             trend="down"
@@ -445,13 +466,11 @@ const PrivateRoute = () => {
                             backgroundColor="#FFDAB9"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total Recieved"
+                            title="Amount Recieved"
                             value={lumsum?.payable}
-                            icon={
-                              <FaMoneyBillWave style={{ color: "#f35f5f" }} />
-                            }
+                            icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
                             trend="up"
@@ -459,11 +478,11 @@ const PrivateRoute = () => {
                             backgroundColor="#D5E8D4"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Total Total Tds"
+                            title="TDS Amount"
                             value={lumsum?.totalTds}
-                            icon={<FaRupeeSign style={{ color: "#ea42a2" }} />}
+                            icon={TdsIcon}
                             color="#5b2a4a"
                             percentage={-3}
                             trend="down"
@@ -471,13 +490,23 @@ const PrivateRoute = () => {
                             backgroundColor="#E6E6FA"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={3} md={3}>
+                        <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Capital"
                             value={lumsum?.totalCapital}
-                            icon={
-                              <AiOutlineBank style={{ color: "#4160f9" }} />
-                            }
+                            icon={CapitalIcon}
+                            color="#293368"
+                            percentage={-3}
+                            trend="down"
+                            width="250px"
+                            backgroundColor="#F5C6AA"
+                          />
+                        </Col>
+                        <Col xs={12} sm={6} lg={2} md={3}>
+                          <DashboardCard
+                            title="Current Portfolio"
+                            value={lumsum?.totalCapital}
+                            icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}
                             trend="down"
@@ -486,8 +515,8 @@ const PrivateRoute = () => {
                           />
                         </Col>
                       </Row>
-                      <Row className="mt-2">
-                        <Col className="mt-2" xs={12} sm={12} lg={12} md={12}>
+                      {/* <Row className="mt-2"> */}
+                      {/* <Col className="mt-2" xs={12} sm={12} lg={12} md={12}>
                           <div className="table-responsive">
                             <Table hover variant="light" className="rounded">
                               <thead>
@@ -530,8 +559,9 @@ const PrivateRoute = () => {
                               </tbody>
                             </Table>
                           </div>
-                        </Col>
-                      </Row>
+                        </Col> */}
+                      <PlanCards plans={protfolio} />
+                      {/* </Row> */}
                     </div>
                   </>
                 )}
