@@ -106,31 +106,38 @@ const BankAccountsTable = () => {
     <>
       <Row>
         <Col md={12} className="d-flex justify-content-end">
-          <Button variant="primary" onClick={handleShow}>
+          <Button
+            className="custom-button border-0 fw-bold"
+            onClick={handleShow}
+          >
             Add Bank Details
           </Button>
         </Col>
       </Row>
-      <Table striped responsive bordered hover variant="light" className="mt-3">
+      <Table striped responsive bordered hover className="mt-3">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Bank Name</th>
-            <th>Account Number</th>
-            <th>IFSC</th>
-            <th>Branch Name</th>
-            <th>Primary</th>
+            <th className="custom-background">#</th>
+            <th className="custom-background">Bank Name</th>
+            <th className="custom-background">Account Number</th>
+            <th className="custom-background">IFSC</th>
+            <th className="custom-background">Branch Name</th>
+            <th className="custom-background">Primary</th>
           </tr>
         </thead>
         <tbody>
           {bankDetail.map((account, index) => (
             <tr key={account.id}>
-              <td>{index + 1}</td>
-              <td>{account.bankName}</td>
-              <td>{account.accountNumber || "N/A"}</td>
-              <td>{account.ifsc || "N/A"}</td>
-              <td>{account.branchName || "N/A"}</td>
-              <td>
+              <td className="custom-background">{index + 1}</td>
+              <td className="custom-background">{account.bankName}</td>
+              <td className="custom-background">
+                {account.accountNumber || "N/A"}
+              </td>
+              <td className="custom-background">{account.ifsc || "N/A"}</td>
+              <td className="custom-background">
+                {account.branchName || "N/A"}
+              </td>
+              <td className="custom-background">
                 <Form.Check
                   type="checkbox"
                   checked={account.primaryFlag || false}
@@ -142,10 +149,10 @@ const BankAccountsTable = () => {
         </tbody>
       </Table>
       <Modal style={{ zIndex: 9999 }} show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header className="custom-background" closeButton>
           <Modal.Title>Add Bank Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="custom-background">
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Bank Name</Form.Label>
@@ -202,11 +209,11 @@ const BankAccountsTable = () => {
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="custom-background">
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button className="custom-button border-0 " onClick={handleSubmit}>
             Save
           </Button>
         </Modal.Footer>

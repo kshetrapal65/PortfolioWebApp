@@ -43,6 +43,7 @@ import TdsIcon from "../Assets/Images/03.png";
 import CapitalIcon from "../Assets/Images/04.png";
 import PortfolioIcon from "../Assets/Images/05.png";
 import PlanCards from "../Component/PlanCards";
+import InvestmentCalculator from "../Component/InvestmentCalculator";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
@@ -84,13 +85,14 @@ const PrivateRoute = () => {
     return (
       <Card
         style={{
-          background: "linear-gradient(90deg, #fcf0eb 50%, #fde8e1 100%)",
+          background: "linear-gradient(90deg, #F7E7DF 50%, #FFD5C7 100%)",
           // color: "#fff",
           borderRadius: "10px",
           padding: "15px",
+          boxShadow: "0px 9px 9px rgba(0, 0, 0, 0.2)",
           // maxWidth: width,
         }}
-        className="shadow-sm"
+        // className="shadow"
       >
         <Row className="align-items-center g-1 justify-content-center mb-2">
           <Col className="justify-content-center d-flex" xs={12}>
@@ -111,7 +113,10 @@ const PrivateRoute = () => {
             <Image style={{ width: "50px" }} src={icon} />
           </Col>
           <Col className="justify-content-center d-flex" xs={12}>
-            <span style={{ fontSize: "13px" }} className="mb-0   fw-bold mt-2">
+            <span
+              style={{ fontSize: "13px", color: "#13477f" }}
+              className="mb-0   fw-bold mt-2"
+            >
               {title}
             </span>
           </Col>
@@ -119,6 +124,7 @@ const PrivateRoute = () => {
             <input
               style={{ textAlign: "center" }}
               type="text"
+              readOnly
               value={value}
               className="form-control rounded-5 "
             />
@@ -246,7 +252,7 @@ const PrivateRoute = () => {
                 {user?.userType === "Admin" ? (
                   <>
                     <div>
-                      <Row className="g-3 justify-content-between ">
+                      <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="investment"
@@ -316,40 +322,75 @@ const PrivateRoute = () => {
                               bordered
                               responsive
                               hover
-                              variant="light"
                               className="rounded"
                             >
                               <thead>
                                 <tr>
-                                  <th>#</th>
-                                  <th>First Name</th>
-                                  <th>Last Name</th>
-                                  <th>User ID</th>
-                                  <th>Invested Amount</th>
-                                  <th>Year</th>
-                                  <th>Registration Date</th>
-                                  <th>Plan End Date</th>
-                                  <th>Plan Type</th>
-                                  <th>Portfolio ID</th>
-                                  <th>Active</th>
-                                  <th>Actions</th>
+                                  <th className="custom-background">#</th>
+                                  <th className="custom-background">
+                                    First Name
+                                  </th>
+                                  <th className="custom-background">
+                                    Last Name
+                                  </th>
+                                  <th className="custom-background">User ID</th>
+                                  <th className="custom-background">
+                                    Invested Amount
+                                  </th>
+                                  <th className="custom-background">Year</th>
+                                  <th className="custom-background">
+                                    Registration Date
+                                  </th>
+                                  <th className="custom-background">
+                                    Plan End Date
+                                  </th>
+                                  <th className="custom-background">
+                                    Plan Type
+                                  </th>
+                                  <th className="custom-background">
+                                    Portfolio ID
+                                  </th>
+                                  <th className="custom-background">Active</th>
+                                  <th className="custom-background">Actions</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {allProtfolio.map((item, index) => (
                                   <tr key={item.portfolioId}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.firstName}</td>
-                                    <td>{item.lastName}</td>
-                                    <td>{item.userId}</td>
-                                    <td>{item.investedAmount}</td>
-                                    <td>{item.year}</td>
-                                    <td>{item.registrationDate}</td>
-                                    <td>{item.planEndDate}</td>
-                                    <td>{item.planType}</td>
-                                    <td>{item.portfolioId}</td>
-                                    <td>{item.active ? "Yes" : "No"}</td>
-                                    <td>
+                                    <td className="custom-background">
+                                      {index + 1}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.firstName}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.lastName}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.userId}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.investedAmount}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.year}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.registrationDate}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.planEndDate}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.planType}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.portfolioId}
+                                    </td>
+                                    <td className="custom-background">
+                                      {item.active ? "Yes" : "No"}
+                                    </td>
+                                    <td className="custom-background">
                                       <FaEdit
                                         onClick={() => handleEdit(item)}
                                       />{" "}
@@ -370,10 +411,10 @@ const PrivateRoute = () => {
                         show={show}
                         onHide={handleClose}
                       >
-                        <Modal.Header closeButton>
+                        <Modal.Header className="custom-background" closeButton>
                           <Modal.Title>Add Portfolio</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
+                        <Modal.Body className="custom-background">
                           <Form onSubmit={handleSubmit}>
                             {flag && (
                               <Form.Group>
@@ -440,7 +481,7 @@ const PrivateRoute = () => {
                               </Form.Select>
                             </Form.Group>
                             <Button
-                              className="custom-button mt-2"
+                              className="custom-button border-0 mt-2"
                               type="submit"
                             >
                               {flag ? "Update" : "Add"}
@@ -453,7 +494,7 @@ const PrivateRoute = () => {
                 ) : (
                   <>
                     <div>
-                      <Row className="g-3 justify-content-between mt-1 ">
+                      <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="investment"
@@ -570,6 +611,7 @@ const PrivateRoute = () => {
           />
           <Route path="bank-accounts" element={<BankAccountsTable />} />
           <Route path="profile" element={<UserProfile />} />
+          <Route path="calculator" element={<InvestmentCalculator />} />
         </Route>
       </Routes>
     </>

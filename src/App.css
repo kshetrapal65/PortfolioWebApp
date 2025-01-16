@@ -63,3 +63,9 @@
     /* font-family: "Poppins", sans-serif; */
   }
 }
+.custom-background {
+  background: linear-gradient(90deg, #f7e7df 50%, #ffd5c7 100%) !important;
+}
+.custom-button {
+  background-color: #f9ab75 !important;
+}

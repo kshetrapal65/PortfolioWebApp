@@ -114,7 +114,7 @@ const UserProfile = () => {
         <div style={styles.divStyle}>
           <PulseLoader
             loading={loading}
-            color="#32bd8f"
+            color="#F9AB75"
             style={styles.backdrop}
           />
         </div>
@@ -128,7 +128,13 @@ const UserProfile = () => {
           </h3>
           <Form onSubmit={handleSubmit}>
             {/* Address Section */}
-            <Card className="bg-light mb-2 shadow  ">
+            <Card
+              style={{
+                background:
+                  "linear-gradient(180deg, #F7E7DF 50%, #FFD5C7 100%)",
+              }}
+              className=" mb-2 shadow  "
+            >
               <Card.Body>
                 <Row>
                   <Col className="text-start" md={12}>
@@ -235,7 +241,13 @@ const UserProfile = () => {
                 </Row>
               </Card.Body>
             </Card>
-            <Card className=" bg-light  shadow  ">
+            <Card
+              style={{
+                background:
+                  "linear-gradient(180deg, #F7E7DF 50%, #FFD5C7 100%)",
+              }}
+              className="shadow"
+            >
               <Card.Body>
                 <Row>
                   <Col md={12} className="text-start">
@@ -333,8 +345,12 @@ const UserProfile = () => {
                 lg={12}
               >
                 <Button
-                  className=" "
-                  variant="primary"
+                  className="fw-bold "
+                  style={{
+                    backgroundColor: "#F9AB75",
+                    color: "#fff",
+                    border: "none",
+                  }}
                   type="submit"
                   disabled={loading}
                 >
