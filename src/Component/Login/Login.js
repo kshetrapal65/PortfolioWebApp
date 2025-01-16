@@ -74,13 +74,14 @@ const Login = () => {
   return (
     <Container
       fluid
-      className="vh-100 d-flex align-items-center justify-content-center bg-light"
+      className="vh-100 d-flex align-items-center justify-content-center  "
+      style={{ backgroundColor: "#fcf0eb" }}
     >
       {loading && (
         <div style={styles.divStyle}>
           <PulseLoader
             loading={loading}
-            color="#093d62"
+            color="#F9AB75"
             style={styles.backdrop}
           />
         </div>
@@ -105,7 +106,7 @@ const Login = () => {
           className="d-flex align-items-center justify-content-center"
         >
           <div
-            className="p-4 rounded shadow bg-white"
+            className="p-4 rounded custom-background shadow bg-white"
             style={{ maxWidth: "400px", width: "100%" }}
           >
             <div className="text-center mb-4">
@@ -180,8 +181,8 @@ const Login = () => {
                   </div>
                   <Button
                     type="submit"
-                    style={{ backgroundColor: "#093d62", border: "none" }}
-                    className="w-100 mt-3"
+                    // style={{ backgroundColor: "#093d62", border: "none" }}
+                    className="w-100 mt-3 custom-button border-0 "
                   >
                     Login
                   </Button>

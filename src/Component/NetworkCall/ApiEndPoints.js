@@ -20,6 +20,7 @@ const ApiEndPoints = {
   updateUserProfile: `${APPConfig.API_URL}/general/updateUserProfile`,
   getUserProfile: `${APPConfig.API_URL}/general/getUserProfile`,
   UpdatePrimaryBank: `${APPConfig.API_URL}/general/updatePrimaryBank`,
+  publicCalculator: `${APPConfig.API_URL}/general/publicCalculator`,
 };
 
 export default ApiEndPoints;

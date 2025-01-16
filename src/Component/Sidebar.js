@@ -38,17 +38,29 @@ import axios from "axios";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 import toast from "react-hot-toast";
 import { FaCoins } from "react-icons/fa";
+import moment from "moment/moment";
 
 const Sidebar = ({ mobileOpen, onClose }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [show, setShow] = useState(false);
   const [bankDetail, setBankDetail] = useState([]);
+  const [img, setImg] = useState(null);
   const [primarryAccount, setPrimarryAccount] = useState();
-  console.log("primarryAccount", primarryAccount);
+  const [account, setAccount] = useState({
+    bankName: primarryAccount?.bankName,
+    branchName: primarryAccount?.branchName || "",
+    ifsc: primarryAccount?.ifsc || "",
+    primaryFlag: primarryAccount?.primaryFlag || "",
+    accountNumber: primarryAccount?.accountNumber || "",
+  });
+
   const user = getUserdata();
+  const token = getToken();
 
   const navigate = useNavigate();
   useEffect(() => {
     getBankDetails();
+    getImg();
   }, []);
   const getBankDetails = async () => {
     try {
@@ -67,13 +79,49 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       console.log(error);
     }
   };
-  const [account, setAccount] = useState({
-    bankName: primarryAccount?.bankName,
-    branchName: primarryAccount?.branchName || "",
-    ifsc: primarryAccount?.ifsc || "",
-    primaryFlag: primarryAccount?.primaryFlag || "",
-    accountNumber: primarryAccount?.accountNumber || "",
-  });
+  const getImg = async () => {
+    try {
+      const response = await axios.get(ApiEndPoints.getImage, {
+        responseType: "arraybuffer", // Correct placement of responseType
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const blob = new Blob([response.data], { type: "image/jpeg" });
+
+      // Generate a URL for the Blob
+      const imageUrl = URL.createObjectURL(blob);
+
+      setImg(imageUrl);
+    } catch (error) {
+      console.error("Error fetching the image:", error);
+    }
+  };
+  const uploadImg = async (e) => {
+    e.preventDefault();
+    const file = img;
+    const formData = new FormData();
+    formData.append("profilePic", file);
+    try {
+      const response = await axios.post(ApiEndPoints.uploadImage, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        getImg();
+        setShow(false);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+  const handleModal = () => {
+    setShow(!show);
+  };
+
   const handleModalClose = () => setShowModal(false);
   const handleModalopen = () => {
     console.log("clicked");
@@ -409,7 +457,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
     // </Box>
     <Container
       fluid
-      className="p-3"
+      className=""
       style={{
         // borderRadius: "15px",
         // background: "linear-gradient(180deg, #fcf0eb 0%, #fce0db 100%)",
@@ -419,12 +467,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       <Row>
         {/* Sidebar */}
         <Col
-          xs={4}
+          xs={12}
           md={12}
+          sm={12}
           className="p-3 text-start "
           style={{
-            background: "linear-gradient(180deg, #fcf0eb 0%, #fce0db 100%)",
-            borderRadius: "15px",
+            background: "linear-gradient(90deg, #F7E7DF 50%, #FFD5C7 100%)",
+            // borderRadius: "15px",
             minHeight: "100vh",
           }}
         >
@@ -434,19 +483,20 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%",
-                backgroundColor: "#f08080",
+                // backgroundColor: "#f08080",
                 margin: "0 auto",
               }}
             >
               <img
-                src="https://cdn.pixabay.com/photo/2015/04/23/22/00/new-year-background-736885_640.jpg"
+                src={img}
                 alt="User"
+                onClick={handleModal}
                 style={{ width: "100px", height: "100px", borderRadius: "50%" }}
               />
             </div>
             <h5 className="mt-3">Khushal Chobisa</h5>
-            <p>Current Date</p>
-            <p>Current Time</p>
+            <h7 className="">{moment().format("MMMM Do, YYYY")}</h7>
+            <p>{moment().format("HH:mm")}</p>
           </div>
           {/* <ul className="list-unstyled">
             <li>Home</li>
@@ -473,6 +523,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to="/bank-accounts">
                     <ListItemIcon sx={{ color: "black" }}>
+                      Bank Account's
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/bank-accounts">
+                    <ListItemIcon sx={{ color: "black" }}>
                       Transaction
                     </ListItemIcon>
                   </ListItemButton>
@@ -483,6 +540,14 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                       onClick={() => handleModalopen()}
                       sx={{ color: "black" }}
                     >
+                      {/* <Visibility  /> */}
+                      View Bank Detail
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/calculator">
+                    <ListItemIcon sx={{ color: "black" }}>
                       {/* <Visibility  /> */}
                       Investment Calculator
                     </ListItemIcon>
@@ -617,12 +682,14 @@ const Sidebar = ({ mobileOpen, onClose }) => {
         onHide={handleModalClose}
         centered
         backdrop="static"
-        style={{ zIndex: 1300 }}
+        style={{
+          zIndex: 1300,
+        }}
       >
-        <ModalHeader closeButton>
+        <ModalHeader className="custom-background" closeButton>
           <h5>Accout Details</h5>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className="custom-background">
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>Bank Name</Form.Label>
@@ -678,6 +745,26 @@ const Sidebar = ({ mobileOpen, onClose }) => {
             )} */}
           </Form>
         </ModalBody>
+      </Modal>
+      <Modal style={{ zIndex: "1300" }} show={show} onHide={handleModal}>
+        <Modal.Header className="custom-background" closeButton>
+          Upload image
+        </Modal.Header>
+
+        <Modal.Body className="custom-background">
+          <Form>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control
+                onChange={(e) => setImg(e.target.files[0])}
+                type="file"
+              />
+            </Form.Group>
+            <Button className="custom-button border-0 mt-2" onClick={uploadImg}>
+              Upload
+            </Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );

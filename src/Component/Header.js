@@ -151,9 +151,11 @@ const Header = ({ onMenuClick }) => {
         </Box>
       </Toolbar>
       <Modal style={{ zIndex: "1300" }} show={show} onHide={handleModal}>
-        <Modal.Header closeButton>Upload image</Modal.Header>
+        <Modal.Header className="custom-background" closeButton>
+          Upload image
+        </Modal.Header>
 
-        <Modal.Body>
+        <Modal.Body className="custom-background">
           <Form>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Image</Form.Label>
@@ -162,7 +164,9 @@ const Header = ({ onMenuClick }) => {
                 type="file"
               />
             </Form.Group>
-            <Button onClick={uploadImg}>Upload</Button>
+            <Button className="custom-button border-0" onClick={uploadImg}>
+              Upload
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>
