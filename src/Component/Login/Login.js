@@ -16,7 +16,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
 import styles from "../Helper/LoaderCss";
 import PulseLoader from "react-spinners/PulseLoader";
-import img from "../../Assets/Images/login.jpg";
+import img from "../../Assets/Images/newlogo.png";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -54,7 +54,6 @@ const Login = () => {
       setLoading(false);
 
       if (response.ok) {
-        console.log("Login successful:", data);
         setToken(data?.data?.token);
         setUserData(JSON.stringify(data?.data));
         window.location.reload();
@@ -175,7 +174,7 @@ const Login = () => {
                 <>
                   <div className="d-flex justify-content-end">
                     Dont have an account?
-                    <Link to="/sign-up" className="text-muted">
+                    <Link to="/sign-up" className="text-muted ms-1">
                       Sign Up
                     </Link>
                   </div>

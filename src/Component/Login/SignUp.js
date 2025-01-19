@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import { setToken, setUserData } from "../Helper/Storage";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -46,17 +48,22 @@ const SignUp = () => {
         throw new Error(data.message || "Something went wrong");
       }
 
-      // Handle successful response (e.g., show success message, redirect, etc.)
+      setToken(data?.data?.token);
+      setUserData(JSON.stringify(data?.data));
+
       navigate("/");
+      window.location.reload();
+      toast.success("Registration successful!");
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="body">
+    <div style={{ backgroundColor: "#fcf0eb" }} className="body">
       <div className="container2">
         <div className="title">Registration</div>
         <div className="content">
@@ -129,7 +136,6 @@ const SignUp = () => {
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
-                  <option value="other">Other</option>
                 </select>
               </div>
             </div>

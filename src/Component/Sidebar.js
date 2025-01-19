@@ -42,9 +42,11 @@ import moment from "moment/moment";
 
 const Sidebar = ({ mobileOpen, onClose }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [currentTime, setCurrentTime] = useState(moment());
   const [show, setShow] = useState(false);
   const [bankDetail, setBankDetail] = useState([]);
   const [img, setImg] = useState(null);
+  const [profileData, setProfileData] = useState();
   const [primarryAccount, setPrimarryAccount] = useState();
   const [account, setAccount] = useState({
     bankName: primarryAccount?.bankName,
@@ -53,6 +55,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
     primaryFlag: primarryAccount?.primaryFlag || "",
     accountNumber: primarryAccount?.accountNumber || "",
   });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(moment());
+    }, 1000); // Updates every second
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
 
   const user = getUserdata();
   const token = getToken();
@@ -60,6 +69,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
   const navigate = useNavigate();
   useEffect(() => {
     getBankDetails();
+    getUserProfile();
     getImg();
   }, []);
   const getBankDetails = async () => {
@@ -124,7 +134,6 @@ const Sidebar = ({ mobileOpen, onClose }) => {
 
   const handleModalClose = () => setShowModal(false);
   const handleModalopen = () => {
-    console.log("clicked");
     getBankDetails();
 
     setShowModal(true);
@@ -193,6 +202,24 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       </Card>
     );
   };
+  const getUserProfile = async () => {
+    try {
+      // setLoading(true);
+      const response = await axios.get(ApiEndPoints.getUserProfile, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        setProfileData(response?.data?.data);
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.log("error", error);
+      // setLoading(false);
+    }
+  };
 
   const drawerContent = (
     <Box
@@ -206,6 +233,11 @@ const Sidebar = ({ mobileOpen, onClose }) => {
         overflowX: "hidden",
       }}
     >
+      <div className="d-flex flex-column align-items-center">
+        <h7 className="text-black">{currentTime.format("MMMM Do, YYYY")}</h7>
+        <p className="text-black">{currentTime.format("HH:mm:ss")}</p>
+      </div>
+
       <List>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/">
@@ -221,10 +253,17 @@ const Sidebar = ({ mobileOpen, onClose }) => {
             </ListItemIcon>
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to="/transaction">
+            <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
+              Transaction
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
         {user?.userType === "User" && (
           <>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to="/bank-accounts">
+              <ListItemButton component={Link} to="/transaction">
                 <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
                   Transaction
                 </ListItemIcon>
@@ -494,9 +533,12 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                 style={{ width: "100px", height: "100px", borderRadius: "50%" }}
               />
             </div>
-            <h5 className="mt-3">Khushal Chobisa</h5>
-            <h7 className="">{moment().format("MMMM Do, YYYY")}</h7>
-            <p>{moment().format("HH:mm")}</p>
+            <h5 className="mt-3">
+              {profileData?.userProfile?.firstName}{" "}
+              {profileData?.userProfile?.lastName}
+            </h5>
+            <h7 className="">{currentTime.format("MMMM Do, YYYY")}</h7>
+            <p>{currentTime.format("HH:mm:ss")}</p>
           </div>
           {/* <ul className="list-unstyled">
             <li>Home</li>
@@ -518,6 +560,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                 <ListItemIcon sx={{ color: "black" }}>Profile</ListItemIcon>
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/transaction">
+                <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
+                  Transaction
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
             {user?.userType === "User" && (
               <>
                 <ListItem disablePadding>
@@ -528,7 +577,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/bank-accounts">
+                  <ListItemButton component={Link} to="/transaction">
                     <ListItemIcon sx={{ color: "black" }}>
                       Transaction
                     </ListItemIcon>
