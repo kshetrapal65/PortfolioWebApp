@@ -14,18 +14,9 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import {
-  FaChartLine,
-  FaCoins,
-  FaDollarSign,
-  FaFileAlt,
-  FaMoneyBillWave,
-  FaPiggyBank,
-  FaRupeeSign,
-  FaShoppingCart,
-} from "react-icons/fa";
-import { BsCartPlus, BsCurrencyExchange, BsGraphUp } from "react-icons/bs";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaPlusCircle, FaRupeeSign } from "react-icons/fa";
+import {} from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 
 import axios from "axios";
 
@@ -34,9 +25,7 @@ import ApiEndPoints from "../Component/NetworkCall/ApiEndPoints";
 import BankAccountsTable from "../Component/BankAccountsTable";
 import UserProfile from "../Component/UserProfile";
 import toast from "react-hot-toast";
-import PulseLoader from "react-spinners/PulseLoader";
-import styles from "../Component/Helper/LoaderCss";
-import { AiOutlineBank } from "react-icons/ai";
+
 import investmentIcon from "../Assets/Images/01.png";
 import AmountRecievedIcon from "../Assets/Images/02.png";
 import TdsIcon from "../Assets/Images/03.png";
@@ -44,6 +33,8 @@ import CapitalIcon from "../Assets/Images/04.png";
 import PortfolioIcon from "../Assets/Images/05.png";
 import PlanCards from "../Component/PlanCards";
 import InvestmentCalculator from "../Component/InvestmentCalculator";
+import { Transaction } from "../Component/Transaction";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
@@ -54,18 +45,27 @@ const PrivateRoute = () => {
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState(null);
   const [lumsum, setLumsum] = useState();
-  const [loading, setLoading] = useState(false);
+  const renderTooltip = (text) => (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {text}
+    </Tooltip>
+  );
 
   const [formData, setFormData] = useState({
     investedAmount: "",
     registrationDate: "",
     planType: "",
     year: "",
+    active: true,
   });
-  console.log("userId", userId);
+  console.log("formData", formData);
+
   const handleformChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, type, checked, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleClose = () => {
@@ -184,7 +184,7 @@ const PrivateRoute = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
       const payload = {
         userId: flag ? formData?.userId : userId?.userId,
@@ -192,7 +192,7 @@ const PrivateRoute = () => {
         year: formData?.year,
         registrationDate: formData?.registrationDate,
         planType: formData?.planType,
-        active: "true",
+        active: flag ? formData?.active : true,
         portfolioId: flag ? formData?.portfolioId : null,
       };
       const response = await axios.post(
@@ -209,7 +209,7 @@ const PrivateRoute = () => {
         getProtFolio();
         setFlag(false);
         getAllProtFolio();
-        setLoading(false);
+
         resetForm();
         toast.success(
           flag
@@ -219,7 +219,7 @@ const PrivateRoute = () => {
       }
     } catch (error) {
       console.log("error", error);
-      setLoading(false);
+
       toast.error("An error occurred. Please try again later.");
     }
   };
@@ -240,6 +240,59 @@ const PrivateRoute = () => {
       console.log("error", error);
     }
   };
+  const [formData1, setFormData1] = useState({
+    amount: "",
+    transactionDate: new Date().toLocaleDateString("en-CA"),
+  });
+
+  const [show1, setShow1] = useState(false);
+  const handleClose1 = () => {
+    setShow1(false);
+    setFormData1({
+      amount: "",
+      transactionDate: new Date().toLocaleDateString("en-CA"),
+    });
+  };
+  const handleShow1 = (data) => {
+    setFormData1((prevData) => ({
+      ...prevData,
+      portfolioId: data?.portfolioId,
+      userId: data?.userId,
+    }));
+
+    setShow1(true);
+  };
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData1({
+      ...formData1,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+  const handleSubmit1 = async () => {
+    const payload = {
+      userId: formData1.userId,
+      amount: formData1.amount,
+      transactionDate: formData1.transactionDate,
+      portfolioId: formData1.portfolioId,
+    };
+    try {
+      const response = await axios.post(ApiEndPoints.addTransaction, payload, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      if (response.status === 200) {
+        // setBankDetail(response.data.data);
+        toast.success("Transaction added successfully");
+        // getBankDetails();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Bank Account add failed");
+    }
+    handleClose1();
+  };
 
   return (
     <>
@@ -255,7 +308,7 @@ const PrivateRoute = () => {
                       <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="investment"
+                            title="Investment"
                             value={lumsum?.totalInvestment}
                             icon={investmentIcon}
                             color="#155345"
@@ -328,12 +381,15 @@ const PrivateRoute = () => {
                                 <tr>
                                   <th className="custom-background">#</th>
                                   <th className="custom-background">
+                                    Portfolio ID
+                                  </th>
+                                  <th className="custom-background">
                                     First Name
                                   </th>
                                   <th className="custom-background">
                                     Last Name
                                   </th>
-                                  <th className="custom-background">User ID</th>
+
                                   <th className="custom-background">
                                     Invested Amount
                                   </th>
@@ -347,11 +403,11 @@ const PrivateRoute = () => {
                                   <th className="custom-background">
                                     Plan Type
                                   </th>
-                                  <th className="custom-background">
-                                    Portfolio ID
+
+                                  <th className="custom-background">Status</th>
+                                  <th colSpan={3} className="custom-background">
+                                    Actions
                                   </th>
-                                  <th className="custom-background">Active</th>
-                                  <th className="custom-background">Actions</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -361,14 +417,15 @@ const PrivateRoute = () => {
                                       {index + 1}
                                     </td>
                                     <td className="custom-background">
+                                      {item.portfolioId}
+                                    </td>
+                                    <td className="custom-background">
                                       {item.firstName}
                                     </td>
                                     <td className="custom-background">
                                       {item.lastName}
                                     </td>
-                                    <td className="custom-background">
-                                      {item.userId}
-                                    </td>
+
                                     <td className="custom-background">
                                       {item.investedAmount}
                                     </td>
@@ -384,21 +441,44 @@ const PrivateRoute = () => {
                                     <td className="custom-background">
                                       {item.planType}
                                     </td>
+
                                     <td className="custom-background">
-                                      {item.portfolioId}
+                                      {item.active ? "Active" : "Inactive"}
                                     </td>
-                                    <td className="custom-background">
-                                      {item.active ? "Yes" : "No"}
-                                    </td>
-                                    <td className="custom-background">
-                                      <FaEdit
-                                        onClick={() => handleEdit(item)}
-                                      />{" "}
-                                      <FaPlus
-                                        onClick={() => handladd(item)}
-                                        className="ms-1"
-                                      />
-                                    </td>
+                                    <OverlayTrigger
+                                      placement="left"
+                                      overlay={renderTooltip("Edit")}
+                                    >
+                                      <td className="custom-background">
+                                        <FaEdit
+                                          onClick={() => handleEdit(item)}
+                                          style={{ cursor: "pointer" }}
+                                        />
+                                      </td>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger
+                                      placement="left"
+                                      overlay={renderTooltip("Add Portfolio")}
+                                    >
+                                      <td className="custom-background">
+                                        <FaPlusCircle
+                                          onClick={() => handladd(item)}
+                                          className=" "
+                                          style={{ cursor: "pointer" }}
+                                        />
+                                      </td>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger
+                                      placement="left"
+                                      overlay={renderTooltip("Add Transaction")}
+                                    >
+                                      <td className="custom-background">
+                                        <FaRupeeSign
+                                          onClick={() => handleShow1(item)}
+                                          style={{ cursor: "pointer" }}
+                                        />
+                                      </td>
+                                    </OverlayTrigger>
                                   </tr>
                                 ))}
                               </tbody>
@@ -480,6 +560,20 @@ const PrivateRoute = () => {
                                 <option value="6">6</option>
                               </Form.Select>
                             </Form.Group>
+                            {flag && (
+                              <Form.Group
+                                className="mb-3"
+                                controlId="formPrimaryFlag"
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label="Is Active"
+                                  name="active"
+                                  checked={formData.active}
+                                  onChange={handleformChange}
+                                />
+                              </Form.Group>
+                            )}
                             <Button
                               className="custom-button border-0 mt-2"
                               type="submit"
@@ -489,6 +583,63 @@ const PrivateRoute = () => {
                           </Form>
                         </Modal.Body>
                       </Modal>
+                      <Modal
+                        style={{ zIndex: 9999 }}
+                        show={show1}
+                        onHide={handleClose1}
+                      >
+                        <Modal.Header className="custom-background" closeButton>
+                          <Modal.Title>Add Transaction</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="custom-background">
+                          <Form>
+                            <Form.Group className="mb-3">
+                              <Form.Label>Amount</Form.Label>
+                              <Form.Control
+                                type="number"
+                                name="amount"
+                                value={formData1.amount}
+                                onChange={handleChange}
+                                placeholder="Enter amount"
+                              />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                              <Form.Label>Transaction Date</Form.Label>
+                              <Form.Control
+                                type="date"
+                                name="transactionDate"
+                                value={formData1.transactionDate}
+                                onChange={handleChange}
+                                placeholder="Enter transaction date"
+                              />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                              <Form.Label>Portfolio Id</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="portfolioId"
+                                disabled
+                                value={formData1.portfolioId}
+                                onChange={handleChange}
+                                placeholder="Enter portfolio id"
+                              />
+                            </Form.Group>
+                          </Form>
+                        </Modal.Body>
+                        <Modal.Footer className="custom-background">
+                          <Button variant="secondary" onClick={handleClose1}>
+                            Cancel
+                          </Button>
+                          <Button
+                            className="custom-button border-0 "
+                            onClick={handleSubmit1}
+                          >
+                            Add
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
                     </div>
                   </>
                 ) : (
@@ -497,7 +648,7 @@ const PrivateRoute = () => {
                       <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="investment"
+                            title="Investment"
                             value={lumsum?.totalInvestment}
                             icon={investmentIcon}
                             color="#155345"
@@ -612,6 +763,7 @@ const PrivateRoute = () => {
           <Route path="bank-accounts" element={<BankAccountsTable />} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="calculator" element={<InvestmentCalculator />} />
+          <Route path="transaction" element={<Transaction />} />
         </Route>
       </Routes>
     </>

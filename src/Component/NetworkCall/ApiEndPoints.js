@@ -21,6 +21,9 @@ const ApiEndPoints = {
   getUserProfile: `${APPConfig.API_URL}/general/getUserProfile`,
   UpdatePrimaryBank: `${APPConfig.API_URL}/general/updatePrimaryBank`,
   publicCalculator: `${APPConfig.API_URL}/general/publicCalculator`,
+  getAllTransactions: `${APPConfig.API_URL}/general/getAllTransactions`,
+  getUserTransactions: `${APPConfig.API_URL}/general/getUserTransactions`,
+  addTransaction: `${APPConfig.API_URL}/general/addTransaction`,
 };
 
 export default ApiEndPoints;
