@@ -35,6 +35,7 @@ import PlanCards from "../Component/PlanCards";
 import InvestmentCalculator from "../Component/InvestmentCalculator";
 import { Transaction } from "../Component/Transaction";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import CompanyLogo from "../Assets/Images/CompanyLogo.jpeg";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
@@ -305,6 +306,16 @@ const PrivateRoute = () => {
                 {user?.userType === "Admin" ? (
                   <>
                     <div>
+                      <Row className="">
+                        <Col className="text-start ms-lg-4 " lg={11}>
+                          <Image
+                            fluid
+                            style={{ height: "100px" }}
+                            src={CompanyLogo}
+                            alt="Logo"
+                          />
+                        </Col>
+                      </Row>
                       <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
@@ -354,7 +365,7 @@ const PrivateRoute = () => {
                             backgroundColor="#F5C6AA"
                           />
                         </Col>
-                        <Col xs={6} sm={6} lg={2} md={3}>
+                        <Col xs={12} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Portfolio"
                             value={lumsum?.totalCapital}
@@ -381,7 +392,7 @@ const PrivateRoute = () => {
                                 <tr>
                                   <th className="custom-background">#</th>
                                   <th className="custom-background">
-                                    Portfolio ID
+                                    Portfolio Number
                                   </th>
                                   <th className="custom-background">
                                     First Name
@@ -417,7 +428,7 @@ const PrivateRoute = () => {
                                       {index + 1}
                                     </td>
                                     <td className="custom-background">
-                                      {item.portfolioId}
+                                      {item.portfolioNumber}
                                     </td>
                                     <td className="custom-background">
                                       {item.firstName}
@@ -645,6 +656,16 @@ const PrivateRoute = () => {
                 ) : (
                   <>
                     <div>
+                      <Row className="">
+                        <Col className="text-start ms-lg-4 " lg={11}>
+                          <Image
+                            fluid
+                            style={{ height: "100px" }}
+                            src={CompanyLogo}
+                            alt="Logo"
+                          />
+                        </Col>
+                      </Row>
                       <Row className="g-3 justify-content-around mt-1 ">
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard

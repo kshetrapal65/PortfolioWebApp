@@ -40,7 +40,7 @@ import toast from "react-hot-toast";
 import { FaCoins } from "react-icons/fa";
 import moment from "moment/moment";
 
-const Sidebar = ({ mobileOpen, onClose }) => {
+const Sidebar = React.memo(({ mobileOpen, onClose }) => {
   const [showModal, setShowModal] = React.useState(false);
   const [currentTime, setCurrentTime] = useState(moment());
   const [show, setShow] = useState(false);
@@ -263,12 +263,13 @@ const Sidebar = ({ mobileOpen, onClose }) => {
         {user?.userType === "User" && (
           <>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to="/transaction">
+              <ListItemButton component={Link} to="/bank-accounts">
                 <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
-                  Transaction
+                  Bank Account's
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>
+
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon
@@ -278,6 +279,14 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                   }}
                   sx={{ color: "black" }}
                 >
+                  {/* <Visibility  /> */}
+                  View Bank Detail
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/calculator">
+                <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
                   {/* <Visibility  /> */}
                   Investment Calculator
                 </ListItemIcon>
@@ -295,139 +304,7 @@ const Sidebar = ({ mobileOpen, onClose }) => {
         </ListItem>
       </List>
       <Box sx={{ flexGrow: 1 }} />
-      {/* <ListItem disablePadding>
-        <Tooltip title="Logout">
-          <ListItemButton onClick={() => Logouts()}>
-            <ListItemIcon sx={{ color: "black" }}>
-              <Logout />
-            </ListItemIcon>
-          </ListItemButton>
-        </Tooltip>
-      </ListItem> */}
     </Box>
-    // <Container
-    //   fluid
-    //   className="p-3"
-    //   style={{ backgroundColor: "#ffe4e1", minHeight: "100vh" }}
-    // >
-    //   <Row>
-
-    //     <Col
-    //       xs={4}
-    //       md={12}
-    //       className="p-3"
-    //       style={{ backgroundColor: "#fddde6", borderRadius: "15px" }}
-    //     >
-    //       <div className="text-center mb-4">
-    //         <div
-    //           style={{
-    //             width: "100px",
-    //             height: "100px",
-    //             borderRadius: "50%",
-    //             backgroundColor: "#f08080",
-    //             margin: "0 auto",
-    //           }}
-    //         ></div>
-    //         <h5 className="mt-3">Khushal Chobisa</h5>
-    //         <p>Current Date</p>
-    //         <p>Current Time</p>
-    //       </div>
-    //       <ul className="list-unstyled">
-    //         <li>Home</li>
-    //         <li>Profile</li>
-    //         <li>Transaction</li>
-    //         <li>Investment Calculator</li>
-    //         <li>Logout</li>
-    //       </ul>
-    //     </Col>
-
-    //     <Col xs={8} md={9} className="p-3">
-    //     <h4 className="mb-4 text-center">User Dashboard UI (Mobile)</h4>
-    //     <Row className="g-3">
-
-    //       <Col xs={12} md={6}>
-    //         <Card
-    //           className="p-3 text-center"
-    //           style={{ backgroundColor: "#ffe4e1", borderRadius: "15px" }}
-    //         >
-    //           <Card.Body>
-    //             <Card.Title>Investment</Card.Title>
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Enter value"
-    //             />
-    //           </Card.Body>
-    //         </Card>
-    //       </Col>
-
-    //       <Col xs={12} md={6}>
-    //         <Card
-    //           className="p-3 text-center"
-    //           style={{ backgroundColor: "#ffe4e1", borderRadius: "15px" }}
-    //         >
-    //           <Card.Body>
-    //             <Card.Title>Amount Received</Card.Title>
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Enter value"
-    //             />
-    //           </Card.Body>
-    //         </Card>
-    //       </Col>
-
-    //       <Col xs={12} md={6}>
-    //         <Card
-    //           className="p-3 text-center"
-    //           style={{ backgroundColor: "#ffe4e1", borderRadius: "15px" }}
-    //         >
-    //           <Card.Body>
-    //             <Card.Title>TDS Amount</Card.Title>
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Enter value"
-    //             />
-    //           </Card.Body>
-    //         </Card>
-    //       </Col>
-
-    //       <Col xs={12} md={6}>
-    //         <Card
-    //           className="p-3 text-center"
-    //           style={{ backgroundColor: "#ffe4e1", borderRadius: "15px" }}
-    //         >
-    //           <Card.Body>
-    //             <Card.Title>Total Capital</Card.Title>
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Enter value"
-    //             />
-    //           </Card.Body>
-    //         </Card>
-    //       </Col>
-
-    //       <Col xs={12}>
-    //         <Card
-    //           className="p-3 text-center"
-    //           style={{ backgroundColor: "#ffe4e1", borderRadius: "15px" }}
-    //         >
-    //           <Card.Body>
-    //             <Card.Title>Current Portfolio</Card.Title>
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               placeholder="Enter value"
-    //             />
-    //           </Card.Body>
-    //         </Card>
-    //       </Col>
-    //     </Row>
-    //   </Col>
-    //   </Row>
-    // </Container>
   );
   const drawerContent1 = (
     // <Box
@@ -540,24 +417,20 @@ const Sidebar = ({ mobileOpen, onClose }) => {
             <h7 className="">{currentTime.format("MMMM Do, YYYY")}</h7>
             <p>{currentTime.format("HH:mm:ss")}</p>
           </div>
-          {/* <ul className="list-unstyled">
-            <li>Home</li>
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-            <li>Transaction</li>
-            <li>Investment Calculator</li>
-            <li>Logout</li>
-          </ul> */}
+
           <List>
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/">
-                <ListItemIcon sx={{ color: "black" }}>Home</ListItemIcon>
+                <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
+                  Home
+                </ListItemIcon>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/profile">
-                <ListItemIcon sx={{ color: "black" }}>Profile</ListItemIcon>
+                <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
+                  Profile
+                </ListItemIcon>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -571,18 +444,15 @@ const Sidebar = ({ mobileOpen, onClose }) => {
               <>
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to="/bank-accounts">
-                    <ListItemIcon sx={{ color: "black" }}>
+                    <ListItemIcon
+                      onClick={() => onClose()}
+                      sx={{ color: "black" }}
+                    >
                       Bank Account's
                     </ListItemIcon>
                   </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/transaction">
-                    <ListItemIcon sx={{ color: "black" }}>
-                      Transaction
-                    </ListItemIcon>
-                  </ListItemButton>
-                </ListItem>
+
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon
@@ -596,7 +466,10 @@ const Sidebar = ({ mobileOpen, onClose }) => {
                 </ListItem>
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to="/calculator">
-                    <ListItemIcon sx={{ color: "black" }}>
+                    <ListItemIcon
+                      onClick={() => onClose()}
+                      sx={{ color: "black" }}
+                    >
                       {/* <Visibility  /> */}
                       Investment Calculator
                     </ListItemIcon>
@@ -614,82 +487,6 @@ const Sidebar = ({ mobileOpen, onClose }) => {
             </ListItem>
           </List>
         </Col>
-
-        {/* Main Dashboard */}
-        {/* <Col xs={8} md={9} className="p-1    ">
-          <h4 className="mb-4 text-center">User Dashboard UI (Mobile)</h4>
-          <Row className="g-1 justify-content-between ">
-            
-            <Col xs={6} md={2}>
-              <DashboardCard
-                title="Total investment"
-                value="454545"
-                icon={<FaCoins style={{ color: "#00c98d" }} />}
-                color="#155345"
-                percentage={-3}
-                trend="down"
-                width="250px"
-                backgroundColor="#FFDAB9"
-              />
-            </Col>
-
-            
-            <Col xs={6} md={2}>
-              <DashboardCard
-                title="Amount Received"
-                value="454545"
-                icon={<FaCoins style={{ color: "#00c98d" }} />}
-                color="#155345"
-                percentage={-3}
-                trend="down"
-                width="250px"
-                backgroundColor="#FFDAB9"
-              />
-            </Col>
-
-             
-            <Col xs={12} md={2}>
-              <DashboardCard
-                title="TDS Amount"
-                value="454545"
-                icon={<FaCoins style={{ color: "#00c98d" }} />}
-                color="#155345"
-                percentage={-3}
-                trend="down"
-                width="250px"
-                backgroundColor="#FFDAB9"
-              />
-            </Col>
-
-             
-            <Col xs={12} md={2}>
-              <DashboardCard
-                title="Total Capital"
-                value="454545"
-                icon={<FaCoins style={{ color: "#00c98d" }} />}
-                color="#155345"
-                percentage={-3}
-                trend="down"
-                width="250px"
-                backgroundColor="#FFDAB9"
-              />
-            </Col>
-
-             
-            <Col xs={2} md={2}>
-              <DashboardCard
-                title="Current Portfolio"
-                value="454545"
-                icon={<FaCoins style={{ color: "#00c98d" }} />}
-                color="#155345"
-                percentage={-3}
-                trend="down"
-                width="250px"
-                backgroundColor="#FFDAB9"
-              />
-            </Col>
-          </Row>
-        </Col> */}
       </Row>
     </Container>
   );
@@ -817,6 +614,6 @@ const Sidebar = ({ mobileOpen, onClose }) => {
       </Modal>
     </>
   );
-};
+});
 
 export default Sidebar;
