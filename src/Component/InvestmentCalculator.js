@@ -12,7 +12,6 @@ const InvestmentCalculator = () => {
     planDuration: "",
   });
   const [response, setResponse] = React.useState({});
-  console.log(response);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -132,7 +132,6 @@ export const Transaction = () => {
           : ApiEndPoints.getUserTransactions,
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
-      console.log(response);
 
       if (response?.status === 200) {
         setTransaction(response?.data?.data);

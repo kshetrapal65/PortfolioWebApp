@@ -14,7 +14,6 @@ import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 const Dashboards = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [protfolio, setProtfolio] = useState([]);
-  console.log("protfolio", protfolio);
 
   const token = getToken();
   useEffect(() => {
