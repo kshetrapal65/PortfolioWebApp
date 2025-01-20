@@ -107,6 +107,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   name="phoneNumber"
+                  maxLength={10}
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="Enter your phone number"

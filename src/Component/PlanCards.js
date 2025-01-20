@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function PlanCards({ plans }) {
   const data = plans;
-  console.log("plans", plans);
 
   const plan = [
     {
@@ -119,7 +118,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.yearlyReturn}
+                          value={plan?.monthlyReturnOnInvestment}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -145,7 +144,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.yearlyTds}
+                          value={plan?.bonusOnMonthlyReturn}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -171,7 +170,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.totalPayable}
+                          value={plan?.totalMonthlyReturn}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -197,7 +196,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.monthlyReturnOnInvestment}
+                          value={plan?.monthlyTds}
                           style={{
                             flex: "1",
                             height: "30px",

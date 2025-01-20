@@ -35,11 +35,10 @@ import PlanCards from "../Component/PlanCards";
 import InvestmentCalculator from "../Component/InvestmentCalculator";
 import { Transaction } from "../Component/Transaction";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import CompanyLogo from "../Assets/Images/CompanyLogo.jpeg";
+import Logo from "../Assets/Images/Logo.jpeg";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
-  console.log("protfolio", protfolio);
 
   const [allProtfolio, setAllProtfolio] = useState([]);
   const [show, setShow] = useState(false);
@@ -59,7 +58,6 @@ const PrivateRoute = () => {
     year: "",
     active: true,
   });
-  console.log("formData", formData);
 
   const handleformChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -167,7 +165,6 @@ const PrivateRoute = () => {
     setShow(true);
     setFlag(true);
     setFormData(item);
-    console.log("item", item);
 
     // Implement edit logic here
   };
@@ -311,7 +308,7 @@ const PrivateRoute = () => {
                           <Image
                             fluid
                             style={{ height: "100px" }}
-                            src={CompanyLogo}
+                            src={Logo}
                             alt="Logo"
                           />
                         </Col>
@@ -332,7 +329,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Amount Recieved"
-                            value={lumsum?.payable}
+                            value={lumsum?.amountReceived}
                             icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
@@ -368,7 +365,7 @@ const PrivateRoute = () => {
                         <Col xs={12} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Portfolio"
-                            value={lumsum?.totalCapital}
+                            value={lumsum?.currentPortfolio}
                             icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}
@@ -661,7 +658,7 @@ const PrivateRoute = () => {
                           <Image
                             fluid
                             style={{ height: "100px" }}
-                            src={CompanyLogo}
+                            src={Logo}
                             alt="Logo"
                           />
                         </Col>
@@ -682,7 +679,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Amount Recieved"
-                            value={lumsum?.payable}
+                            value={lumsum?.amountReceived}
                             icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
@@ -718,7 +715,7 @@ const PrivateRoute = () => {
                         <Col xs={12} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Current Portfolio"
-                            value={lumsum?.totalCapital}
+                            value={lumsum?.currentPortfolio}
                             icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}

@@ -73,8 +73,6 @@ const BankAccountsTable = () => {
     }
   };
   const updateBankDetail = async (item) => {
-    console.log("item", item);
-
     const payload = {
       // bankName: item.bankName,
       accountNumber: item.accountNumber,

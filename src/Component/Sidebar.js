@@ -55,6 +55,8 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
     primaryFlag: primarryAccount?.primaryFlag || "",
     accountNumber: primarryAccount?.accountNumber || "",
   });
+  console.log("img", img);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(moment());
@@ -89,10 +91,11 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
       console.log(error);
     }
   };
+
   const getImg = async () => {
     try {
       const response = await axios.get(ApiEndPoints.getImage, {
-        responseType: "arraybuffer", // Correct placement of responseType
+        responseType: "arraybuffer",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,7 +103,6 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
 
       const blob = new Blob([response.data], { type: "image/jpeg" });
 
-      // Generate a URL for the Blob
       const imageUrl = URL.createObjectURL(blob);
 
       setImg(imageUrl);
@@ -381,7 +383,6 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
       }}
     >
       <Row>
-        {/* Sidebar */}
         <Col
           xs={12}
           md={12}
