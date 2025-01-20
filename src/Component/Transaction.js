@@ -166,8 +166,8 @@ export const Transaction = () => {
   return (
     <div>
       {/* Date Filter Section */}
-      <Row className="mb-3   justify-content-end">
-        <Col className="text-end" md={3} lg={3}>
+      <Row className="mb-3 mt-1   justify-content-end">
+        <Col className="text-end" xs={7} md={3} lg={3}>
           <Form.Group controlId="transactionDate">
             <Form.Control
               type="date"
@@ -176,7 +176,7 @@ export const Transaction = () => {
             />
           </Form.Group>
         </Col>
-        <Col md={3} lg={2} className="   text-start   ">
+        <Col md={3} xs={5} lg={2} className=" text-lg-start   text-end   ">
           <Button className="custom-button border-0" onClick={handleFilter}>
             Filter
           </Button>
