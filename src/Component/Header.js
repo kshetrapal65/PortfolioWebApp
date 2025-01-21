@@ -34,6 +34,7 @@ const Header = ({ onMenuClick }) => {
       if (response.status === 200) {
         getImg();
         setShow(false);
+        getUserProfile();
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -146,7 +147,15 @@ const Header = ({ onMenuClick }) => {
               {profileData?.userProfile?.firstName}{" "}
               {profileData?.userProfile?.lastName}
             </span>
-            <Avatar onClick={handleModal} src={img} alt="Profile" />
+            <Avatar
+              onClick={handleModal}
+              src={
+                profileData?.userProfile?.profileImagePath == null
+                  ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                  : img
+              }
+              alt="Profile"
+            />
           </IconButton>
         </Box>
       </Toolbar>
