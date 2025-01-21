@@ -105,13 +105,17 @@ const SignUp = () => {
               <div className="input-box">
                 <span className="details">Phone Number</span>
                 <input
-                  type="text"
+                  type="number"
                   name="phoneNumber"
-                  maxLength={10}
                   value={formData.phoneNumber}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 10) {
+                      handleChange(e);
+                    }
+                  }}
                   placeholder="Enter your phone number"
                   required
+                  onWheel={(e) => e.target.blur()}
                 />
               </div>
               <div className="input-box">
