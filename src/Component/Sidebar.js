@@ -125,6 +125,7 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
       if (response.status === 200) {
         getImg();
         setShow(false);
+        getUserProfile();
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -405,7 +406,11 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
               }}
             >
               <img
-                src={img}
+                src={
+                  profileData?.userProfile?.profileImagePath == null
+                    ? "https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                    : img
+                }
                 alt="User"
                 onClick={handleModal}
                 style={{ width: "100px", height: "100px", borderRadius: "50%" }}
