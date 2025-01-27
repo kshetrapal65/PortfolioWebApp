@@ -11,13 +11,14 @@ import { getToken } from "./Helper/Storage";
 import axios from "axios";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 
-const Dashboards = () => {
+const Dashboards = React.memo(() => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [protfolio, setProtfolio] = useState([]);
 
   const token = getToken();
   useEffect(() => {
     getProtFolio();
+    window.scrollTo(0, 0);
   }, []);
 
   const handleDrawerToggle = () => {
@@ -59,6 +60,6 @@ const Dashboards = () => {
       </Box>
     </Box>
   );
-};
+});
 
 export default Dashboards;

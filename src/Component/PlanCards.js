@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { formatNumberWithCommas } from "./Helper/FormatNumberWithCommas";
 
 function PlanCards({ plans }) {
   const data = plans;
@@ -91,7 +92,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.investedAmount}
+                          value={formatNumberWithCommas(plan?.investedAmount)}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -118,7 +119,9 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.monthlyReturnOnInvestment}
+                          value={formatNumberWithCommas(
+                            plan?.monthlyReturnOnInvestment
+                          )}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -144,7 +147,9 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.bonusOnMonthlyReturn}
+                          value={formatNumberWithCommas(
+                            plan?.bonusOnMonthlyReturn
+                          )}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -170,7 +175,9 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.totalMonthlyReturn}
+                          value={formatNumberWithCommas(
+                            plan?.totalMonthlyReturn
+                          )}
                           style={{
                             flex: "1",
                             height: "30px",
@@ -196,7 +203,7 @@ function PlanCards({ plans }) {
                         <Form.Control
                           type="text"
                           readOnly
-                          value={plan?.monthlyTds}
+                          value={formatNumberWithCommas(plan?.monthlyTds)}
                           style={{
                             flex: "1",
                             height: "30px",

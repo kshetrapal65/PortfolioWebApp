@@ -113,8 +113,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 import { getToken, getUserdata } from "./Helper/Storage";
+import { formatNumberWithCommas } from "./Helper/FormatNumberWithCommas";
 
-export const Transaction = () => {
+export const Transaction = React.memo(() => {
   const user = getUserdata();
   const [transaction, setTransaction] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -122,6 +123,7 @@ export const Transaction = () => {
 
   useEffect(() => {
     getTransaction();
+    window.scrollTo(0, 0);
   }, []);
 
   const getTransaction = async () => {
@@ -163,7 +165,7 @@ export const Transaction = () => {
   };
 
   return (
-    <div>
+    <>
       {/* Date Filter Section */}
       <Row className="mb-3 mt-1   justify-content-end">
         <Col className="text-end" xs={7} md={3} lg={3}>
@@ -194,8 +196,13 @@ export const Transaction = () => {
         <thead>
           <tr>
             <th className="custom-background">#</th>
+            {user?.userType === "Admin" && (
+              <th className="custom-background">User Name</th>
+            )}
             <th className="custom-background">Amount</th>
-            <th className="custom-background">Portfolio Id</th>
+            <th className="custom-background">
+              {user?.userType === "Admin" ? "Portfolio Number" : "Portfolio Id"}
+            </th>
             <th className="custom-background">Transaction Date</th>
           </tr>
         </thead>
@@ -203,12 +210,23 @@ export const Transaction = () => {
           {filteredTransactions?.map((transaction, index) => (
             <tr key={transaction.id}>
               <td className="custom-background">{index + 1}</td>
+              {user?.userType === "Admin" ? (
+                <td className="custom-background">
+                  {transaction?.userName || "N/A"}
+                </td>
+              ) : null}
               <td className="custom-background">
-                {transaction?.amount || "N/A"}
+                {formatNumberWithCommas(transaction?.amount) || "N/A"}
               </td>
-              <td className="custom-background">
-                {transaction?.portfolioId || "N/A"}
-              </td>
+              {user?.userType === "Admin" ? (
+                <td className="custom-background">
+                  {transaction?.portfolioNumber || "N/A"}
+                </td>
+              ) : (
+                <td className="custom-background">
+                  {transaction?.portfolioId || "N/A"}
+                </td>
+              )}
               <td className="custom-background">
                 {transaction?.transactionDate || "N/A"}
               </td>
@@ -216,6 +234,6 @@ export const Transaction = () => {
           ))}
         </tbody>
       </Table>
-    </div>
+    </>
   );
-};
+});

@@ -35,7 +35,8 @@ import PlanCards from "../Component/PlanCards";
 import InvestmentCalculator from "../Component/InvestmentCalculator";
 import { Transaction } from "../Component/Transaction";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import Logo from "../Assets/Images/Logo.jpeg";
+import Logo from "../Assets/Images/Logo.png";
+import { formatNumberWithCommas } from "../Component/Helper/FormatNumberWithCommas";
 
 const PrivateRoute = () => {
   const [protfolio, setProtfolio] = useState([]);
@@ -80,22 +81,26 @@ const PrivateRoute = () => {
     getAllProtFolio();
     getlumsum();
   }, []);
-  const DashboardCard = ({ title, value, icon, color, backgroundColor }) => {
-    return (
-      <Card
-        style={{
-          background: "linear-gradient(90deg, #F7E7DF 50%, #FFD5C7 100%)",
-          // color: "#fff",
-          borderRadius: "10px",
-          padding: "15px",
-          boxShadow: "0px 9px 9px rgba(0, 0, 0, 0.2)",
-          // maxWidth: width,
-        }}
-        // className="shadow"
-      >
-        <Row className="align-items-center g-1 justify-content-center mb-2">
-          <Col className="justify-content-center d-flex" xs={12}>
-            {/* <div
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const DashboardCard = React.memo(
+    ({ title, value, icon, color, backgroundColor }) => {
+      return (
+        <Card
+          style={{
+            background: "linear-gradient(90deg, #F7E7DF 50%, #FFD5C7 100%)",
+            // color: "#fff",
+            borderRadius: "10px",
+            padding: "15px",
+            boxShadow: "0px 9px 9px rgba(0, 0, 0, 0.2)",
+            // maxWidth: width,
+          }}
+          // className="shadow"
+        >
+          <Row className="align-items-center g-1 justify-content-center mb-2">
+            <Col className="justify-content-center d-flex" xs={12}>
+              {/* <div
               style={{
                 backgroundColor: color,
                 borderRadius: "50%",
@@ -109,29 +114,30 @@ const PrivateRoute = () => {
             >
               <Image style={{ width: "30px" }} src={investmentIcon} />
             </div> */}
-            <Image style={{ width: "50px" }} src={icon} />
-          </Col>
-          <Col className="justify-content-center d-flex" xs={12}>
-            <span
-              style={{ fontSize: "13px", color: "#13477f" }}
-              className="mb-0   fw-bold mt-2"
-            >
-              {title}
-            </span>
-          </Col>
-          <Col xs={12} className="justify-content-center d-flex">
-            <input
-              style={{ textAlign: "center" }}
-              type="text"
-              readOnly
-              value={value}
-              className="form-control rounded-5 "
-            />
-          </Col>
-        </Row>
-      </Card>
-    );
-  };
+              <Image style={{ width: "50px" }} src={icon} />
+            </Col>
+            <Col className="justify-content-center d-flex" xs={12}>
+              <span
+                style={{ fontSize: "13px", color: "#13477f" }}
+                className="mb-0   fw-bold mt-2"
+              >
+                {title}
+              </span>
+            </Col>
+            <Col xs={12} className="justify-content-center d-flex">
+              <input
+                style={{ textAlign: "center" }}
+                type="text"
+                readOnly
+                value={value}
+                className="form-control rounded-5 "
+              />
+            </Col>
+          </Row>
+        </Card>
+      );
+    }
+  );
   const getProtFolio = async () => {
     try {
       const response = await axios.get(ApiEndPoints.GetUserPortfolio, {
@@ -317,7 +323,9 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Investment"
-                            value={lumsum?.totalInvestment}
+                            value={formatNumberWithCommas(
+                              lumsum?.totalInvestment
+                            )}
                             icon={investmentIcon}
                             color="#155345"
                             percentage={-3}
@@ -328,8 +336,10 @@ const PrivateRoute = () => {
                         </Col>
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
-                            title="Amount Recieved"
-                            value={lumsum?.amountReceived}
+                            title="Amount Paid"
+                            value={formatNumberWithCommas(
+                              lumsum?.amountReceived
+                            )}
                             icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
@@ -341,7 +351,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="TDS Amount"
-                            value={lumsum?.totalTds}
+                            value={formatNumberWithCommas(lumsum?.totalTds)}
                             icon={TdsIcon}
                             color="#5b2a4a"
                             percentage={-3}
@@ -353,7 +363,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Capital"
-                            value={lumsum?.totalCapital}
+                            value={formatNumberWithCommas(lumsum?.totalCapital)}
                             icon={CapitalIcon}
                             color="#293368"
                             percentage={-3}
@@ -365,7 +375,9 @@ const PrivateRoute = () => {
                         <Col xs={12} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Portfolio"
-                            value={lumsum?.currentPortfolio}
+                            value={formatNumberWithCommas(
+                              lumsum?.currentPortfolio
+                            )}
                             icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}
@@ -420,7 +432,7 @@ const PrivateRoute = () => {
                               </thead>
                               <tbody>
                                 {allProtfolio.map((item, index) => (
-                                  <tr key={item.portfolioId}>
+                                  <tr key={index}>
                                     <td className="custom-background">
                                       {index + 1}
                                     </td>
@@ -435,7 +447,9 @@ const PrivateRoute = () => {
                                     </td>
 
                                     <td className="custom-background">
-                                      {item.investedAmount}
+                                      {formatNumberWithCommas(
+                                        item.investedAmount
+                                      )}
                                     </td>
                                     <td className="custom-background">
                                       {item.year}
@@ -667,7 +681,9 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Investment"
-                            value={lumsum?.totalInvestment}
+                            value={formatNumberWithCommas(
+                              lumsum?.totalInvestment
+                            )}
                             icon={investmentIcon}
                             color="#155345"
                             percentage={-3}
@@ -679,7 +695,9 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Amount Recieved"
-                            value={lumsum?.amountReceived}
+                            value={formatNumberWithCommas(
+                              lumsum?.amountReceived
+                            )}
                             icon={AmountRecievedIcon}
                             color="#5f3237"
                             percentage={3}
@@ -691,7 +709,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="TDS Amount"
-                            value={lumsum?.totalTds}
+                            value={formatNumberWithCommas(lumsum?.totalTds)}
                             icon={TdsIcon}
                             color="#5b2a4a"
                             percentage={-3}
@@ -703,7 +721,7 @@ const PrivateRoute = () => {
                         <Col xs={6} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Total Capital"
-                            value={lumsum?.totalCapital}
+                            value={formatNumberWithCommas(lumsum?.totalCapital)}
                             icon={CapitalIcon}
                             color="#293368"
                             percentage={-3}
@@ -715,7 +733,9 @@ const PrivateRoute = () => {
                         <Col xs={12} sm={6} lg={2} md={3}>
                           <DashboardCard
                             title="Current Portfolio"
-                            value={lumsum?.currentPortfolio}
+                            value={formatNumberWithCommas(
+                              lumsum?.currentPortfolio
+                            )}
                             icon={PortfolioIcon}
                             color="#293368"
                             percentage={-3}
