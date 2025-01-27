@@ -7,7 +7,7 @@ import ApiEndPoints from "./NetworkCall/ApiEndPoints";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-const Header = ({ onMenuClick }) => {
+const Header = React.memo(({ onMenuClick }) => {
   const [profileData, setProfileData] = useState();
   const token = getToken();
   const [img, setImg] = useState(null);
@@ -181,6 +181,6 @@ const Header = ({ onMenuClick }) => {
       </Modal>
     </AppBar>
   );
-};
+});
 
 export default Header;

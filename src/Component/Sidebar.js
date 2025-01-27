@@ -55,14 +55,15 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
     primaryFlag: primarryAccount?.primaryFlag || "",
     accountNumber: primarryAccount?.accountNumber || "",
   });
-  console.log("img", img);
+
+  // i want to update time in every minute
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(moment());
-    }, 1000); // Updates every second
+    }, 60000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   const user = getUserdata();
@@ -234,11 +235,12 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
         flexDirection: "column",
         paddingTop: "10px",
         overflowX: "hidden",
+        boxShadow: "9px 0px 9px rgba(0, 0, 0, 0.2)",
       }}
     >
       <div className="d-flex flex-column align-items-center">
-        <h7 className="text-black">{currentTime.format("MMMM Do, YYYY")}</h7>
-        <p className="text-black">{currentTime.format("HH:mm:ss")}</p>
+        <h6 className="text-black">{currentTime.format("MMMM Do, YYYY")}</h6>
+        <p className="text-black">{currentTime.format("HH:mm A")}</p>
       </div>
 
       <List>
@@ -376,7 +378,7 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
     // </Box>
     <Container
       fluid
-      className=""
+      className="shadow"
       style={{
         // borderRadius: "15px",
         // background: "linear-gradient(180deg, #fcf0eb 0%, #fce0db 100%)",
@@ -420,11 +422,12 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
               {profileData?.userProfile?.firstName}{" "}
               {profileData?.userProfile?.lastName}
             </h5>
-            <h7 className="">{currentTime.format("MMMM Do, YYYY")}</h7>
-            <p>{currentTime.format("HH:mm:ss")}</p>
+            <h6>{profileData?.userProfile?.portfolioNumber}</h6>
+            <h6 className="">{currentTime.format("MMMM Do, YYYY")}</h6>
+            <p>{currentTime.format("HH:mm A")}</p>
           </div>
 
-          <List>
+          {/* <List>
             <ListItem disablePadding>
               <ListItemButton component={Link} to="/">
                 <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
@@ -465,7 +468,7 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
                       onClick={() => handleModalopen()}
                       sx={{ color: "black" }}
                     >
-                      {/* <Visibility  /> */}
+                      
                       View Bank Detail
                     </ListItemIcon>
                   </ListItemButton>
@@ -476,7 +479,7 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
                       onClick={() => onClose()}
                       sx={{ color: "black" }}
                     >
-                      {/* <Visibility  /> */}
+                      
                       Investment Calculator
                     </ListItemIcon>
                   </ListItemButton>
@@ -486,9 +489,60 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
             <ListItem disablePadding>
               <ListItemButton onClick={() => Logouts()}>
                 <ListItemIcon sx={{ color: "black" }}>
-                  {/* <Visibility onClick={() => handleModalopen()} /> */}
+                  
                   Logout
                 </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          </List> */}
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/">
+                <ListItemIcon sx={{ color: "black" }}>Home</ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/profile">
+                <ListItemIcon sx={{ color: "black" }}>Profile</ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/transaction">
+                <ListItemIcon sx={{ color: "black" }}>Transaction</ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+            {user?.userType === "User" && (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/bank-accounts">
+                    <ListItemIcon sx={{ color: "black" }}>
+                      Bank Account's
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon
+                      onClick={() => handleModalopen()}
+                      sx={{ color: "black" }}
+                    >
+                      View Bank Detail
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/calculator">
+                    <ListItemIcon sx={{ color: "black" }}>
+                      Investment Calculator
+                    </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+              </>
+            )}
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => Logouts()}>
+                <ListItemIcon sx={{ color: "black" }}>Logout</ListItemIcon>
               </ListItemButton>
             </ListItem>
           </List>
@@ -522,6 +576,7 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
           "& .MuiDrawer-paper": {
             width: 250,
             // backgroundColor: "#1f1f2e",
+            boxShadow: "9px 0px 9px rgba(0, 0, 0, 0.2)",
           },
         }}
         open

@@ -181,9 +181,17 @@ const Login = () => {
                   <Button
                     type="submit"
                     // style={{ backgroundColor: "#093d62", border: "none" }}
-                    className="w-100 mt-3 custom-button border-0 "
+                    className="w-100 mt-3 fw-bold custom-button border-0 "
                   >
                     Login
+                  </Button>
+                  <hr />
+                  <Button
+                    onClick={() => window.open("https://maharanacapital.in/")}
+                    // style={{ backgroundColor: "#093d62", border: "none" }}
+                    className="w-100 mt-1 fw-bold custom-button border-0 "
+                  >
+                    Home
                   </Button>
                 </>
               )}
