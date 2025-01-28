@@ -4,31 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { formatNumberWithCommas } from "./Helper/FormatNumberWithCommas";
 
 function PlanCards({ plans }) {
-  const data = plans;
-
-  const plan = [
-    {
-      type: "Monthly",
-      details: [
-        "Investment",
-        "Monthly ROI",
-        "Bonus on ROI",
-        "Monthly Income",
-        "Monthly TDS",
-      ],
-    },
-    {
-      type: "Yearly",
-      details: [
-        "Investment",
-        "Monthly ROI",
-        "Bonus on ROI",
-        "Monthly Income",
-        "Monthly TDS",
-      ],
-    },
-  ];
-
   return (
     <Container
       className="py-4   mt-3"
@@ -114,13 +89,17 @@ function PlanCards({ plans }) {
                         }}
                       >
                         <span style={{ flex: "1", color: "#13477f" }}>
-                          Monthly ROI
+                          {plan?.planType == "Yearly"
+                            ? "Yearly ROI"
+                            : "Monthly ROI"}
                         </span>
                         <Form.Control
                           type="text"
                           readOnly
                           value={formatNumberWithCommas(
-                            plan?.monthlyReturnOnInvestment
+                            plan?.planType === "Yearly"
+                              ? plan?.yearlyReturn
+                              : plan?.monthlyReturnOnInvestment
                           )}
                           style={{
                             flex: "1",
@@ -148,7 +127,9 @@ function PlanCards({ plans }) {
                           type="text"
                           readOnly
                           value={formatNumberWithCommas(
-                            plan?.bonusOnMonthlyReturn
+                            plan?.planType === "Yearly"
+                              ? plan?.bonusOnYearlyReturn
+                              : plan?.bonusOnMonthlyReturn
                           )}
                           style={{
                             flex: "1",
@@ -170,13 +151,17 @@ function PlanCards({ plans }) {
                         }}
                       >
                         <span style={{ flex: "1", color: "#13477f" }}>
-                          Monthly Income
+                          {plan?.planType == "Yearly"
+                            ? "Yearly Income"
+                            : "  Monthly Income"}
                         </span>
                         <Form.Control
                           type="text"
                           readOnly
                           value={formatNumberWithCommas(
-                            plan?.totalMonthlyReturn
+                            plan?.planType === "Yearly"
+                              ? plan?.totalYearlyReturn
+                              : plan?.totalMonthlyReturn
                           )}
                           style={{
                             flex: "1",
@@ -198,12 +183,18 @@ function PlanCards({ plans }) {
                         }}
                       >
                         <span style={{ flex: "1", color: "#13477f" }}>
-                          Monthly TDS
+                          {plan?.planType == "Yearly"
+                            ? "Yearly TDS"
+                            : "Monthly TDS"}
                         </span>
                         <Form.Control
                           type="text"
                           readOnly
-                          value={formatNumberWithCommas(plan?.monthlyTds)}
+                          value={formatNumberWithCommas(
+                            plan?.planType === "Yearly"
+                              ? plan?.yearlyTds
+                              : plan?.monthlyTds
+                          )}
                           style={{
                             flex: "1",
                             height: "30px",
