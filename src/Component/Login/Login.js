@@ -161,11 +161,11 @@ const Login = () => {
                 </div>
               </Form.Group>
 
-              {error && (
+              {/* {error && (
                 <Alert variant="danger" className="text-center">
                   {error}
                 </Alert>
-              )}
+              )} */}
               {loading ? (
                 <div className="text-center my-3">
                   <Spinner animation="border" variant="primary" />
