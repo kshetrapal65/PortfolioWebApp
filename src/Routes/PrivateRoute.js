@@ -213,6 +213,7 @@ const PrivateRoute = () => {
         getProtFolio();
         setFlag(false);
         getAllProtFolio();
+        getlumsum();
 
         resetForm();
         toast.success(
@@ -237,8 +238,8 @@ const PrivateRoute = () => {
           },
         }
       );
-      if (response.status === 200) {
-        setLumsum(response.data.data);
+      if (response?.status === 200) {
+        setLumsum(response?.data.data);
       }
     } catch (error) {
       console.log("error", error);
@@ -257,6 +258,7 @@ const PrivateRoute = () => {
       transactionDate: new Date().toLocaleDateString("en-CA"),
     });
   };
+
   const handleShow1 = (data) => {
     setFormData1((prevData) => ({
       ...prevData,
@@ -286,9 +288,10 @@ const PrivateRoute = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      if (response.status === 200) {
+      if (response?.status === 200) {
         // setBankDetail(response.data.data);
         toast.success("Transaction added successfully");
+        getlumsum();
         // getBankDetails();
       }
     } catch (error) {
