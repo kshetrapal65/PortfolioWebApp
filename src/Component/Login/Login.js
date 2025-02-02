@@ -67,7 +67,8 @@ const Login = () => {
     <Container
       fluid
       className="vh-100 d-flex align-items-center justify-content-center  "
-      style={{ backgroundColor: "#fcf0eb" }}>
+      style={{ backgroundColor: "#fcf0eb" }}
+    >
       {loading && (
         <div style={styles.divStyle}>
           <PulseLoader
@@ -81,7 +82,8 @@ const Login = () => {
         <Col
           xs={12}
           md={6}
-          className=" d-md-flex justify-content-center align-items-center mt-3">
+          className=" d-md-flex justify-content-center align-items-center mt-3"
+        >
           <img
             src={img}
             width="60%"
@@ -93,25 +95,24 @@ const Login = () => {
         <Col
           xs={12}
           md={6}
-          className="d-flex align-items-center justify-content-center">
+          className="d-flex align-items-center justify-content-center"
+        >
           <div
             className="p-4 rounded custom-background shadow bg-white"
-            style={{ maxWidth: "400px", width: "100%" }}>
+            style={{ maxWidth: "400px", width: "100%" }}
+          >
             <div className="text-center mb-4">
-              <img
-                src={img1}
-                alt="Avatar"
-                style={{ height: "80px" }}
-              />
+              <img src={img1} alt="Avatar" style={{ height: "80px" }} />
               <h2 className="mt-3">Welcome</h2>
             </div>
             <Form onSubmit={handleSubmit}>
-              <Form.Group
-                controlId="email"
-                className="mb-3">
-                <Form.Label className="text-start w-100">Email or Phone</Form.Label> {/* Aligns label to start */}
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Label className="text-start w-100">
+                  Email or Phone
+                </Form.Label>{" "}
+                {/* Aligns label to start */}
                 <Form.Control
-                  type="email"
+                  // type="email"
                   name="email"
                   placeholder="Enter your email or phone"
                   value={formData.email}
@@ -122,8 +123,10 @@ const Login = () => {
 
               <Form.Group
                 controlId="password"
-                className="mb-3 position-relative">
-                <Form.Label className="text-start w-100">Password</Form.Label> {/* Aligns label to start */}
+                className="mb-3 position-relative"
+              >
+                <Form.Label className="text-start w-100">Password</Form.Label>{" "}
+                {/* Aligns label to start */}
                 <div className="position-relative">
                   <Form.Control
                     type={showPassword ? "text" : "password"}
@@ -136,8 +139,13 @@ const Login = () => {
                   <span
                     className="position-absolute top-50 end-0 translate-middle-y me-3"
                     style={{ cursor: "pointer" }}
-                    onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible size={20} />
+                    ) : (
+                      <AiOutlineEye size={20} />
+                    )}
                   </span>
                 </div>
               </Form.Group>
@@ -149,32 +157,29 @@ const Login = () => {
               )} */}
               {loading ? (
                 <div className="text-center my-3">
-                  <Spinner
-                    animation="border"
-                    variant="primary"
-                  />
+                  <Spinner animation="border" variant="primary" />
                 </div>
               ) : (
                 <>
                   <div className="d-flex justify-content-end">
                     Dont have an account?
-                    <Link
-                      to="/sign-up"
-                      className="text-muted ms-1">
+                    <Link to="/sign-up" className="text-muted ms-1">
                       Sign Up
                     </Link>
                   </div>
                   <Button
                     type="submit"
                     // style={{ backgroundColor: "#093d62", border: "none" }}
-                    className="w-100 mt-3 fw-bold custom-button border-0 ">
+                    className="w-100 mt-3 fw-bold custom-button border-0 "
+                  >
                     Login
                   </Button>
                   <hr />
                   <Button
                     onClick={() => window.open("https://maharanacapital.in/")}
                     // style={{ backgroundColor: "#093d62", border: "none" }}
-                    className="w-100 mt-1 fw-bold custom-button border-0 ">
+                    className="w-100 mt-1 fw-bold custom-button border-0 "
+                  >
                     Home
                   </Button>
                 </>
