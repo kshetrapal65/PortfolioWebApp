@@ -89,7 +89,7 @@ const Login = () => {
             width="60%"
             height={"60%"}
             alt="Background"
-            className="img-fluid"
+            className="img-fluid tt"
           />
         </Col>
         <Col

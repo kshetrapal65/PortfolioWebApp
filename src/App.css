@@ -32,30 +32,38 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 ::-webkit-scrollbar {
   width: 5px;
 }
+
 ::-webkit-scrollbar-button {
   background: #eee;
 }
+
 ::-webkit-scrollbar-track-piece {
   background: #eee;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #ccc;
 }
+
 .dashboard-content {
   margin-left: 240px !important;
 }
+
 @media (max-width: 599px) {
   .dashboard-content {
     margin-left: 0px !important;
     padding: 0px !important;
   }
+
   .MuiBox-root {
     /* margin: 0; */
     padding: 2px !important;
@@ -63,9 +71,16 @@
     /* font-family: "Poppins", sans-serif; */
   }
 }
+
 .custom-background {
   background: linear-gradient(90deg, #f7e7df 50%, #ffd5c7 100%) !important;
 }
+
 .custom-button {
   background-color: #f9ab75 !important;
+}
+
+
+.tt {
+  width: 90%;
 }
