@@ -245,7 +245,11 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
 
       <List>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/">
+          <ListItemButton
+            onClick={() => (window.location.href = "/")}
+            component={Link}
+            to="/"
+          >
             <ListItemIcon onClick={() => onClose()} sx={{ color: "black" }}>
               Home
             </ListItemIcon>
@@ -497,7 +501,11 @@ const Sidebar = React.memo(({ mobileOpen, onClose }) => {
           </List> */}
           <List>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to="/">
+              <ListItemButton
+                onClick={() => (window.location.href = "/")}
+                component={Link}
+                to="/"
+              >
                 <ListItemIcon sx={{ color: "black" }}>Home</ListItemIcon>
               </ListItemButton>
             </ListItem>

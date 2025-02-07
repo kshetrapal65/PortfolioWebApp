@@ -128,12 +128,7 @@ export const Transaction = React.memo(() => {
 
   const getTransaction = async () => {
     try {
-      const response = await axios.get(
-        user?.userType === "Admin"
-          ? ApiEndPoints.getAllTransactions
-          : ApiEndPoints.getUserTransactions,
-        { headers: { Authorization: `Bearer ${getToken()}` } }
-      );
+      const response = await axios.get(user?.userType === "Admin" ? ApiEndPoints.getAllTransactions : ApiEndPoints.getUserTransactions, { headers: { Authorization: `Bearer ${getToken()}` } });
 
       if (response?.status === 200) {
         setTransaction(response?.data?.data);
@@ -168,7 +163,11 @@ export const Transaction = React.memo(() => {
     <>
       {/* Date Filter Section */}
       <Row className="mb-3 mt-1   justify-content-end">
-        <Col className="text-end" xs={7} md={3} lg={3}>
+        <Col
+          className="text-end"
+          xs={7}
+          md={3}
+          lg={3}>
           <Form.Group controlId="transactionDate">
             <Form.Control
               type="date"
@@ -177,32 +176,38 @@ export const Transaction = React.memo(() => {
             />
           </Form.Group>
         </Col>
-        <Col md={3} xs={5} lg={2} className=" text-lg-start   text-end   ">
-          <Button className="custom-button border-0" onClick={handleFilter}>
+        <Col
+          md={3}
+          xs={5}
+          lg={2}
+          className=" text-lg-start   text-end   ">
+          <Button
+            className="custom-button border-0"
+            onClick={handleFilter}>
             Filter
           </Button>
           <Button
             variant="secondary"
             onClick={handleClearFilter}
-            className="ms-2"
-          >
+            className="ms-2">
             Clear
           </Button>
         </Col>
       </Row>
 
       {/* Transactions Table */}
-      <Table striped responsive bordered hover className="mt-3">
+      <Table
+        striped
+        responsive
+        bordered
+        hover
+        className="mt-3">
         <thead>
           <tr>
             <th className="custom-background">#</th>
-            {user?.userType === "Admin" && (
-              <th className="custom-background">User Name</th>
-            )}
+            {user?.userType === "Admin" && <th className="custom-background">User Name</th>}
             <th className="custom-background">Amount</th>
-            <th className="custom-background">
-              {user?.userType === "Admin" ? "Portfolio Number" : "Portfolio Id"}
-            </th>
+            {/* <th className="custom-background">{user?.userType === "Admin" ? "Portfolio Number" : "Portfolio Id"}</th> */}
             <th className="custom-background">Transaction Date</th>
           </tr>
         </thead>
@@ -210,26 +215,10 @@ export const Transaction = React.memo(() => {
           {filteredTransactions?.map((transaction, index) => (
             <tr key={transaction.id}>
               <td className="custom-background">{index + 1}</td>
-              {user?.userType === "Admin" ? (
-                <td className="custom-background">
-                  {transaction?.userName || "N/A"}
-                </td>
-              ) : null}
-              <td className="custom-background">
-                {formatNumberWithCommas(transaction?.amount) || "N/A"}
-              </td>
-              {user?.userType === "Admin" ? (
-                <td className="custom-background">
-                  {transaction?.portfolioNumber || "N/A"}
-                </td>
-              ) : (
-                <td className="custom-background">
-                  {transaction?.portfolioId || "N/A"}
-                </td>
-              )}
-              <td className="custom-background">
-                {transaction?.transactionDate || "N/A"}
-              </td>
+              {user?.userType === "Admin" ? <td className="custom-background">{transaction?.userName || "N/A"}</td> : null}
+              <td className="custom-background">{formatNumberWithCommas(transaction?.amount) || "N/A"}</td>
+              {/* {user?.userType === "Admin" ? <td className="custom-background">{transaction?.portfolioNumber || "N/A"}</td> : <td className="custom-background">{transaction?.portfolioId || "N/A"}</td>} */}
+              <td className="custom-background">{transaction?.transactionDate || "N/A"}</td>
             </tr>
           ))}
         </tbody>

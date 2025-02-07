@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Button,
-  Container,
-  Row,
-  Col,
-  Spinner,
-  Alert,
-} from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ApiEndPoints from "../NetworkCall/ApiEndPoints";
 import { setToken, setUserData } from "../Helper/Storage";
@@ -16,7 +8,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
 import styles from "../Helper/LoaderCss";
 import PulseLoader from "react-spinners/PulseLoader";
-import img from "../../Assets/Images/newlogo.png";
+import img from "../../Assets/Images/Websitelogo-02.png";
+import img1 from "../../Assets/Images/newsticker.png";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -85,18 +78,18 @@ const Login = () => {
           />
         </div>
       )}
-      <Row className="w-100">
+      <Row className="w-100 mt-3">
         <Col
           xs={12}
           md={6}
-          className="d-none d-md-flex justify-content-center align-items-center"
+          className=" d-md-flex justify-content-center align-items-center mt-3"
         >
           <img
             src={img}
             width="60%"
             height={"60%"}
             alt="Background"
-            className="img-fluid"
+            className="img-fluid tt"
           />
         </Col>
         <Col
@@ -109,11 +102,7 @@ const Login = () => {
             style={{ maxWidth: "400px", width: "100%" }}
           >
             <div className="text-center mb-4">
-              <img
-                src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg"
-                alt="Avatar"
-                style={{ height: "80px" }}
-              />
+              <img src={img1} alt="Avatar" style={{ height: "80px" }} />
               <h2 className="mt-3">Welcome</h2>
             </div>
             <Form onSubmit={handleSubmit}>
@@ -123,7 +112,7 @@ const Login = () => {
                 </Form.Label>{" "}
                 {/* Aligns label to start */}
                 <Form.Control
-                  type="email"
+                  // type="email"
                   name="email"
                   placeholder="Enter your email or phone"
                   value={formData.email}
@@ -161,11 +150,11 @@ const Login = () => {
                 </div>
               </Form.Group>
 
-              {error && (
+              {/* {error && (
                 <Alert variant="danger" className="text-center">
                   {error}
                 </Alert>
-              )}
+              )} */}
               {loading ? (
                 <div className="text-center my-3">
                   <Spinner animation="border" variant="primary" />
